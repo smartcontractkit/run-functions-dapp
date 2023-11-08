@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
   const ip = request.ip ?? '127.0.0.1'
 
   // Only rate limit if IP is not in allowlist
-  if (RATELIMIT_IP_EXCEPTION_LIST.indexOf(ip) > -1) {
+  if (RATELIMIT_IP_EXCEPTION_LIST.indexOf(ip) == -1) {
     const { success } = await ratelimit.limit(ip)
     if (!success)
       return NextResponse.json({ error: 'Too many requests. Try again later.' })
