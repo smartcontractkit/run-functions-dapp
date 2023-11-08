@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 223 30% 9%;
+    --foreground: 0 0% 100%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 220 7% 74%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --card: 223 30% 9%;
+    --card-foreground: 221 8% 46%;
+
+    --border: 221 28% 20%;
+    --input: 221 28% 20%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 223 30% 9%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 222 38% 19%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+.react-syntax-highlighter-line-row:first-child {
+  padding-top: 16px;
+}
+.react-syntax-highlighter-line-row:first-child
+  > .react-syntax-highlighter-line-number {
+  padding-top: 16px;
+}
+.react-syntax-highlighter-line-row:last-child {
+  margin-bottom: 16px;
+}
+.react-syntax-highlighter-line-row:last-child
+  > .react-syntax-highlighter-line-number {
+  bottom: -16px !important;
+}
+.explainer-link {
+  text-decoration: underline;
+}

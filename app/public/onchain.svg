@@ -1,0 +1,32 @@
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<path id="Vector" d="M1.00195 15.3715V20.4643L6.09476 23.4983L9.77891 21.3312" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6.09473 23.4983V18.2971" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Vector_3">
+<g filter="url(#filter0_i_243_1595)">
+<path d="M12.7051 15.3715V20.4643L17.7979 23.4983L22.999 20.4643V15.3715" fill="white"/>
+</g>
+<path d="M12.7051 15.3715V20.4643L17.7979 23.4983L22.999 20.4643V15.3715" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="Vector_4" d="M17.7979 12.4458L12.7051 15.3715L17.7979 18.2971L22.999 15.3715L17.7979 12.4458Z" fill="white" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M17.7979 18.2971V23.4983" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Vector_6">
+<path d="M6.85352 4.42725V9.52008L11.9463 12.4458L17.1475 9.52008V4.42725" fill="#181D29"/>
+<path d="M6.85352 4.42725V9.52008L11.9463 12.4458L17.1475 9.52008V4.42725" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="Vector_7" d="M11.9463 7.35291V12.4457" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_8" d="M9.77891 14.613L6.09476 12.4458L1.00195 15.3715L6.09476 18.2971L9.02041 16.6718" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_9" d="M11.9463 1.50159L6.85352 4.42726L11.9463 7.35293L17.1475 4.42726L11.9463 1.50159Z" fill="#181D29" stroke="#375BD2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<filter id="filter0_i_243_1595" x="12.0049" y="14.6715" width="11.6943" height="9.52686" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-3" dy="1"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.87451 0 0 0 0 0.905882 0 0 0 0 0.984314 0 0 0 1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_243_1595"/>
+</filter>
+</defs>
+</svg>

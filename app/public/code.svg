@@ -1,0 +1,13 @@
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="programming-browser">
+        <path id="vector"
+            d="M2.25 22.25C1.85218 22.25 1.47064 22.092 1.18934 21.8107C0.908035 21.5294 0.75 21.1478 0.75 20.75V4.365C0.751319 3.93708 0.921893 3.52707 1.22448 3.22448C1.52707 2.92189 1.93708 2.75132 2.365 2.75H21.643C22.0688 2.75132 22.4768 2.92105 22.7779 3.22214C23.079 3.52322 23.2487 3.9312 23.25 4.357V20.635C23.2487 21.0629 23.0781 21.4729 22.7755 21.7755C22.4729 22.0781 22.0629 22.2487 21.635 22.25H2.25Z"
+            fill="#181D29" stroke="#375BD2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path id="vector_2" d="M23.25 7.25H0.75" stroke="#375BD2" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        <path id="vector_3" d="M12.75 14.75H17.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        <path id="vector_4" d="M6.75 11.75L9.75 14.75L6.75 17.75" stroke="white" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+</svg>
