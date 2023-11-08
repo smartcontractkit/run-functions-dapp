@@ -8,18 +8,14 @@ import {
 } from '@/components/ui/command'
 import Loader from '@/components/loading-spinner'
 import { Command as CommandPrimitive } from 'cmdk'
-import {
-  useState,
-  useRef,
-  useCallback,
-  type KeyboardEvent,
-  ReactElement,
-} from 'react'
+import { useState, useRef, useCallback, type KeyboardEvent } from 'react'
 
 export type Option = Record<'value' | 'label', string> & Record<string, string>
 
 type AutoCompleteProps = {
   options: Option[]
+  inputValue: string
+  setInputValue: (value: string) => void
   value?: Option
   onValueChange?: (value: Option) => void
   onInputChange?: (value: string) => void
@@ -36,12 +32,13 @@ const AutoComplete = ({
   onInputChange,
   disabled,
   isLoading = false,
+  inputValue,
+  setInputValue,
 }: AutoCompleteProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [isOpen, setOpen] = useState(false)
   const [selected, setSelected] = useState<Option>(value as Option)
-  const [inputValue, setInputValue] = useState<string>(value?.label || '')
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
@@ -74,7 +71,7 @@ const AutoComplete = ({
   const handleBlur = useCallback(() => {
     setOpen(false)
     setInputValue(selected?.label)
-  }, [selected])
+  }, [selected, setInputValue])
 
   const handleSelectOption = useCallback(
     (selectedOption: Option) => {
@@ -87,7 +84,7 @@ const AutoComplete = ({
         inputRef?.current?.blur()
       }, 0)
     },
-    [onValueChange],
+    [onValueChange, setInputValue],
   )
 
   return (
