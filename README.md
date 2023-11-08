@@ -24,7 +24,7 @@ This dApp consists of two parts: the contracts and the web UI.
 
 ## Frontend
 
-`./app` directory is a Next.js project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+The `./app` directory is a Next.js project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 It contains the frontend for the Chainlink Functions playground demo dApp.
 
