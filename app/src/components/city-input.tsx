@@ -18,6 +18,7 @@ export const CityInput = () => {
 
   const [options, setOptions] = useState<Option[]>([])
   const [loading, setLoading] = useState(false)
+  const [value, setValue] = useState<Option>()
 
   useEffect(() => {
     if (!searchParams.toString()) {
@@ -45,27 +46,33 @@ export const CityInput = () => {
     fetchSuggestions()
   }, [valueDebounced])
 
-  const submit = (value: Option) => {
-    const [lat, lon] = value.value.split(',')
-    const newParams = new URLSearchParams({
-      lat,
-      lon,
-    })
-    router.push(`${pathname}?${newParams}`)
+  const submit = () => {
+    if (value) {
+      const [lat, lon] = value.value.split(',')
+      const newParams = new URLSearchParams({
+        lat,
+        lon,
+      })
+      router.push(`${pathname}?${newParams}`)
+    }
   }
 
   return (
     <>
       <AutoComplete
         placeholder="City Name"
-        onValueChange={submit}
+        onValueChange={setValue}
         inputValue={inputValue}
         setInputValue={setInputValue}
         onInputChange={setInputValue}
         options={options}
         isLoading={loading}
       />
-      <Button className="w-full bg-[#375BD2] py-3 text-xl font-medium leading-[26px] hover:bg-[#375BD2]/90">
+      <Button
+        disabled={!value}
+        onClick={() => submit()}
+        className="w-full bg-[#375BD2] py-3 text-xl font-medium leading-[26px] hover:bg-[#375BD2]/90"
+      >
         Run
         <Image src="/arrow-right.svg" width={36} height={36} alt="arrow" />
       </Button>
