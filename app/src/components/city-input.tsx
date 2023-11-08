@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { useDebounce } from '@/hooks/useDebounce'
 import { Button } from '@/components/ui/button'
@@ -11,12 +11,19 @@ import { GeoLocation } from '@/types'
 export const CityInput = () => {
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   const [inputValue, setInputValue] = useState('')
   const valueDebounced = useDebounce(inputValue, 500)
 
   const [options, setOptions] = useState<Option[]>([])
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!searchParams.toString()) {
+      setInputValue('')
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (!valueDebounced || valueDebounced.length < 4) {
@@ -52,6 +59,8 @@ export const CityInput = () => {
       <AutoComplete
         placeholder="City Name"
         onValueChange={submit}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
         onInputChange={setInputValue}
         options={options}
         isLoading={loading}
