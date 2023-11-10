@@ -35,3 +35,11 @@ export type HistoryEntry = {
   city: string
   country: string
 }
+
+export type AddToHistoryPayload = {
+  txHash: string
+  temperature: string
+  timestamp: number
+  city: string
+  country: string
+} & Coordinates

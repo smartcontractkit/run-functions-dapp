@@ -8,14 +8,20 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import CodeBlock from '@/components/code-block'
 import LoadingSpinner from '@/components/loading-spinner'
 import { cn } from '@/lib/utils'
-import { Coordinates } from '@/types'
+import { AddToHistoryPayload, Coordinates } from '@/types'
 import { firaCode } from '@/lib/fonts'
 
 type OnchainDataProps = {
   coordinates: Coordinates
+  city: string
+  country: string
 }
 
-export const OnchainData = ({ coordinates }: OnchainDataProps) => {
+export const OnchainData = ({
+  coordinates,
+  city,
+  country,
+}: OnchainDataProps) => {
   const [txHash, setTxHash] = useState()
   const [requestId, setRequestId] = useState()
   const [onchainData, setOnchainData] = useState()
@@ -48,20 +54,33 @@ export const OnchainData = ({ coordinates }: OnchainDataProps) => {
       if (result.data) {
         clearInterval(interval)
         setOnchainData(result.data)
+        const historyPayload: AddToHistoryPayload = {
+          latitude: result.data.latitude,
+          longitude: result.data.longitude,
+          txHash: txHash ?? '',
+          temperature: result.data.temperature,
+          timestamp: result.data.timestamp,
+          city,
+          country,
+        }
+        await fetch('/api/history', {
+          method: 'POST',
+          body: JSON.stringify(historyPayload),
+        })
       }
     }, 1000)
   }, [requestId])
 
   if (error) {
     return (
-      <div className="flex h-80 flex-col items-center justify-center space-y-2 rounded bg-[#10141e] border border-[##252E42]">
+      <div className="flex h-80 flex-col items-center justify-center space-y-2 rounded border border-[##252E42] bg-[#10141e]">
         <div className={cn('relative mx-auto w-fit')}>
           <Image src="/error.svg" width={168} height={168} alt="error" />
         </div>
         <span className="ml-2 text-xl font-[500] text-white">
           Too many requests
         </span>
-        <span className="ml-2 text-base font-[450] text-card-foreground pb-4">
+        <span className="ml-2 pb-4 text-base font-[450] text-card-foreground">
           Please try again in a minute.
         </span>
       </div>
@@ -85,7 +104,7 @@ export const OnchainData = ({ coordinates }: OnchainDataProps) => {
         What is in the smart contract
       </label>
       <ScrollArea
-        className={cn('rounded mb-3 mt-2 h-[173px]', firaCode.variable)}
+        className={cn('mb-3 mt-2 h-[173px] rounded', firaCode.variable)}
       >
         <CodeBlock codeString={JSON.stringify(onchainData, null, 4)} />
       </ScrollArea>
