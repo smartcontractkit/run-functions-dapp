@@ -25,3 +25,13 @@ export type WeatherResponse = {
     weather_code: string
   }
 } & Coordinates
+
+export type HistoryEntry = {
+  txHash: string
+  temperature: string
+  timestamp: number
+  temperatureUnit: string
+  weatherCode: string
+  city: string
+  country: string
+}
