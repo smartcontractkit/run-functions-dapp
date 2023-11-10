@@ -4,7 +4,7 @@
 
 # Chainlink Functions Demo dApp
 
-This project is an example dApp, designed to run on the Fuji testnet (Avalanche), that uses [Chainlink Functions](https://docs.chain.link/chainlink-functions/). It demonstrates how to use Chainlink Functions in a full-stack implementation with a real smart contract code, coupled with an easy to follow guideance on how it works under the hood. The functionality allows users to query a city's temperature from a web2 API and then write it on-chain via a smart contract.
+This project is an example dApp, designed to run on the Fuji testnet (Avalanche), that uses [Chainlink Functions](https://docs.chain.link/chainlink-functions/). It demonstrates how to use Chainlink Functions in a full-stack implementation with a real smart contract code, coupled with an easy to follow guidance on how it works under the hood. The functionality allows users to query a city's temperature from a web2 API and then write it on-chain via a smart contract.
 
 Chainlink Functions is used to determine the input city's current temperature. 
 
