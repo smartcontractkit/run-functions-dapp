@@ -10,6 +10,7 @@ import { Coordinates } from '@/types'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import History from './history'
 
 export default async function Home({
   searchParams,
@@ -175,7 +176,9 @@ export default async function Home({
           </>
         )}
       </div>
-      <UnderTheHood />
+      <UnderTheHood>
+        <History />
+      </UnderTheHood>
     </main>
   )
 }
