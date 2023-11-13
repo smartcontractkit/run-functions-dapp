@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import CodeBlock from '@/components/code-block'
 import LoadingSpinner from '@/components/loading-spinner'
 import { cn } from '@/lib/utils'
-import { AddToHistoryPayload, Coordinates } from '@/types'
+import { Coordinates } from '@/types'
 import { firaCode } from '@/lib/fonts'
 
 type OnchainDataProps = {
@@ -31,7 +31,7 @@ export const OnchainData = ({
     const requestOnchainWeather = async () => {
       const response = await fetch('/api/onchain-weather', {
         method: 'POST',
-        body: JSON.stringify(coordinates),
+        body: JSON.stringify({ ...coordinates, city, country }),
       })
       const result = await response.json()
       if (result.error) {
@@ -42,7 +42,7 @@ export const OnchainData = ({
       setRequestId(result.data.requestId)
     }
     requestOnchainWeather()
-  }, [coordinates])
+  }, [coordinates, city, country])
 
   useEffect(() => {
     if (!requestId) return
@@ -54,19 +54,6 @@ export const OnchainData = ({
       if (result.data) {
         clearInterval(interval)
         setOnchainData(result.data)
-        const historyPayload: AddToHistoryPayload = {
-          latitude: result.data.latitude,
-          longitude: result.data.longitude,
-          txHash: txHash ?? '',
-          temperature: result.data.temperature,
-          timestamp: result.data.timestamp,
-          city,
-          country,
-        }
-        await fetch('/api/history', {
-          method: 'POST',
-          body: JSON.stringify(historyPayload),
-        })
       }
     }, 1000)
   }, [requestId])
