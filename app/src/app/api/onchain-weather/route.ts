@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
       country: params.country,
     })
   } catch (error) {
-    return NextResponse.error()
+    console.log('Adding request to history failed.')
   }
   return NextResponse.json({ data })
 }
