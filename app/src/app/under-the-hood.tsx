@@ -6,12 +6,12 @@ import CodeBlock from '@/components/code-block'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { CSSProperties, useRef, useState } from 'react'
+import { CSSProperties, useRef, useState, ReactNode } from 'react'
 import { createElement } from 'react-syntax-highlighter'
 import { CONTRACT_CODE, TABS } from '@/config/contract-code'
 import { siteConfig } from '@/config/site'
 
-const UnderTheHood = () => {
+const UnderTheHood = ({ children }: { children?: ReactNode }) => {
   const [activeTab, setActiveTab] = useState(0)
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const linesRef = useRef<Array<HTMLSpanElement | null>>([])
@@ -27,7 +27,7 @@ const UnderTheHood = () => {
             <Button
               key={i}
               //   eslint-disable-next-line tailwindcss/no-custom-classname
-              className="bg-[#181D2999] h-fit w-full flex-col items-start space-y-2 border border-l-8 border-border border-l-[#375BD2] px-8 py-6 text-left"
+              className="h-fit w-full flex-col items-start space-y-2 border border-l-8 border-border border-l-[#375BD2] bg-[#181D2999] px-8 py-6 text-left"
               onClick={() => {
                 scrollRef.current?.scrollTo({
                   top: linesRef.current[Math.min(...highlightedLines) - 3]
@@ -161,6 +161,7 @@ const UnderTheHood = () => {
           </div>
         </div>
       </div>
+      {children}
     </div>
   )
 }

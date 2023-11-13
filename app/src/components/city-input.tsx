@@ -49,9 +49,12 @@ export const CityInput = () => {
   const submit = () => {
     if (value) {
       const [lat, lon] = value.value.split(',')
+      const [city, country] = value.label.split(', ')
       const newParams = new URLSearchParams({
         lat,
         lon,
+        city,
+        country,
       })
       router.push(`${pathname}?${newParams}`)
     }

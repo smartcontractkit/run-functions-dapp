@@ -24,7 +24,7 @@ export const fetchCurrentWeather = async (
   const params = new URLSearchParams({
     latitude: location.latitude.toString(),
     longitude: location.longitude.toString(),
-    current: 'temperature_2m',
+    current: ['temperature_2m', 'weather_code'].join(','),
   })
   const data = await fetchWeatherData(params)
   return data
@@ -38,4 +38,9 @@ export const getCurrentTemperature = (weatherResponse: WeatherResponse) => {
 export const getCurrentTemperatureUnit = (weatherResponse: WeatherResponse) => {
   const temperatureUnit = weatherResponse.current_units.temperature_2m
   return temperatureUnit
+}
+
+export const getCurrentWeatherCode = (weatherResponse: WeatherResponse) => {
+  const weatherCode = weatherResponse.current.weather_code
+  return weatherCode
 }
