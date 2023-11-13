@@ -3,8 +3,8 @@ import { ethers } from 'ethers'
 import { weatherConsumerABI } from '@/config/contracts'
 import { Coordinates } from '@/types'
 
-const provider = new ethers.JsonRpcProvider(process.env.NETWORK_RPC_URL)
 const getWeatherContract = () => {
+  const provider = new ethers.JsonRpcProvider(process.env.NETWORK_RPC_URL)
   const signer = new ethers.Wallet(process.env.PRIVATE_KEY as string, provider)
   const contract = new ethers.Contract(
     process.env.CONTRACT_ADDRESS as string,
@@ -36,7 +36,5 @@ export const requestWeatherOnchain = async (location: Coordinates) => {
   )
   const receipt = await tx.wait()
   const requestId = receipt?.logs[2].args[0] as string
-  const blockNumber = receipt?.logs[2].blockNumber
-  const timestamp = (await provider.getBlock(blockNumber))?.timestamp
-  return { tx, requestId, timestamp }
+  return { tx, requestId }
 }

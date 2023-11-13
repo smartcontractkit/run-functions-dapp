@@ -3,13 +3,7 @@ import { Ratelimit } from '@upstash/ratelimit'
 import { kv } from '@vercel/kv'
 
 import { getWeatherOnchain, requestWeatherOnchain } from '@/lib/request-onchain'
-import { HistoryEntry } from '@/types'
-import {
-  fetchCurrentWeather,
-  getCurrentTemperature,
-  getCurrentTemperatureUnit,
-  getCurrentWeatherCode,
-} from '@/lib/fetch-weather'
+import { addToHistory } from '@/lib/history'
 
 const ratelimit = new Ratelimit({
   redis: kv,
@@ -37,40 +31,23 @@ export async function POST(request: NextRequest) {
     latitude: params.latitude,
     longitude: params.longitude,
   })
-  if (!result || !result.requestId || !result.timestamp)
-    return NextResponse.error()
+  if (!result || !result.requestId) return NextResponse.error()
 
   const data = {
     requestId: result.requestId,
     txHash: result.tx.hash,
-    timestamp: result.timestamp,
   }
-
-  const currentEntries = await kv.lrange<HistoryEntry>('history', 0, -1)
-  if (currentEntries.some((e) => e.txHash === data.txHash)) {
+  try {
+    await addToHistory({
+      txHash: data.txHash,
+      latitude: params.latitude,
+      longitude: params.longitude,
+      city: params.city,
+      country: params.country,
+    })
+  } catch (error) {
     return NextResponse.error()
   }
-  if (currentEntries.length >= 10) {
-    await kv.rpop('history', 1)
-  }
-  const weatherResponse = await fetchCurrentWeather({
-    latitude: params.latitude,
-    longitude: params.longitude,
-  })
-  const weatherCode = getCurrentWeatherCode(weatherResponse)
-  const temperature = getCurrentTemperature(weatherResponse)
-  const temperatureUnit = getCurrentTemperatureUnit(weatherResponse)
-  const historyEntry = {
-    txHash: data.txHash,
-    timestamp: data.timestamp,
-    city: params.city,
-    country: params.country,
-    temperature: `${temperature}`,
-    weatherCode,
-    temperatureUnit,
-  }
-  await kv.lpush<HistoryEntry>('history', historyEntry)
-
   return NextResponse.json({ data })
 }
 
