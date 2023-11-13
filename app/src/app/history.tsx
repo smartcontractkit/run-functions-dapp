@@ -83,7 +83,16 @@ const History = async () => {
                       width={24}
                       height={24}
                     />
-                    <span className="text-2xl font-[450]">{`${temperature}${temperatureUnit}`}</span>
+                    <span className="text-2xl font-[450]">
+                      {`
+                      ${
+                        temperature.length === 3
+                          ? String.fromCharCode(160) +
+                            String.fromCharCode(160) +
+                            temperature
+                          : temperature
+                      }${temperatureUnit}`}
+                    </span>
                   </div>
                 </a>
               ),
