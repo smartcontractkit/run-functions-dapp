@@ -70,7 +70,7 @@ const History = async () => {
                 >
                   <div className="flex flex-col space-y-2">
                     <label className="font-[450] leading-4">{`${city}, ${country}`}</label>
-                    <span className="text-xs text-accent-foreground">
+                    <span className="text-xs text-[#6D7380]">
                       {formatDistanceToNow(fromUnixTime(timestamp), {
                         addSuffix: true,
                       })}
