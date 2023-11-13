@@ -13,9 +13,15 @@ import { firaCode } from '@/lib/fonts'
 
 type OnchainDataProps = {
   coordinates: Coordinates
+  city: string
+  country: string
 }
 
-export const OnchainData = ({ coordinates }: OnchainDataProps) => {
+export const OnchainData = ({
+  coordinates,
+  city,
+  country,
+}: OnchainDataProps) => {
   const [txHash, setTxHash] = useState()
   const [requestId, setRequestId] = useState()
   const [onchainData, setOnchainData] = useState()
@@ -25,7 +31,7 @@ export const OnchainData = ({ coordinates }: OnchainDataProps) => {
     const requestOnchainWeather = async () => {
       const response = await fetch('/api/onchain-weather', {
         method: 'POST',
-        body: JSON.stringify(coordinates),
+        body: JSON.stringify({ ...coordinates, city, country }),
       })
       const result = await response.json()
       if (result.error) {
@@ -36,7 +42,7 @@ export const OnchainData = ({ coordinates }: OnchainDataProps) => {
       setRequestId(result.data.requestId)
     }
     requestOnchainWeather()
-  }, [coordinates])
+  }, [coordinates, city, country])
 
   useEffect(() => {
     if (!requestId) return
@@ -54,14 +60,14 @@ export const OnchainData = ({ coordinates }: OnchainDataProps) => {
 
   if (error) {
     return (
-      <div className="flex h-80 flex-col items-center justify-center space-y-2 rounded bg-[#10141e] border border-[##252E42]">
+      <div className="flex h-80 flex-col items-center justify-center space-y-2 rounded border border-[##252E42] bg-[#10141e]">
         <div className={cn('relative mx-auto w-fit')}>
           <Image src="/error.svg" width={168} height={168} alt="error" />
         </div>
         <span className="ml-2 text-xl font-[500] text-white">
           Too many requests
         </span>
-        <span className="ml-2 text-base font-[450] text-card-foreground pb-4">
+        <span className="ml-2 pb-4 text-base font-[450] text-card-foreground">
           Please try again in a minute.
         </span>
       </div>
@@ -85,7 +91,7 @@ export const OnchainData = ({ coordinates }: OnchainDataProps) => {
         What is in the smart contract
       </label>
       <ScrollArea
-        className={cn('rounded mb-3 mt-2 h-[173px]', firaCode.variable)}
+        className={cn('mb-3 mt-2 h-[173px] rounded', firaCode.variable)}
       >
         <CodeBlock codeString={JSON.stringify(onchainData, null, 4)} />
       </ScrollArea>

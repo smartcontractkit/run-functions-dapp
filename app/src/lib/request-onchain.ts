@@ -36,6 +36,5 @@ export const requestWeatherOnchain = async (location: Coordinates) => {
   )
   const receipt = await tx.wait()
   const requestId = receipt?.logs[2].args[0] as string
-
   return { tx, requestId }
 }

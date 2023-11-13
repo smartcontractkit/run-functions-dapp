@@ -3,6 +3,7 @@ import { Ratelimit } from '@upstash/ratelimit'
 import { kv } from '@vercel/kv'
 
 import { getWeatherOnchain, requestWeatherOnchain } from '@/lib/request-onchain'
+import { addToHistory } from '@/lib/history'
 
 const ratelimit = new Ratelimit({
   redis: kv,
@@ -26,14 +27,27 @@ export async function POST(request: NextRequest) {
   if (!params || !params.latitude || !params.longitude)
     return NextResponse.error()
 
-  const result = await requestWeatherOnchain(params)
+  const result = await requestWeatherOnchain({
+    latitude: params.latitude,
+    longitude: params.longitude,
+  })
   if (!result || !result.requestId) return NextResponse.error()
 
   const data = {
     requestId: result.requestId,
     txHash: result.tx.hash,
   }
-
+  try {
+    await addToHistory({
+      txHash: data.txHash,
+      latitude: params.latitude,
+      longitude: params.longitude,
+      city: params.city,
+      country: params.country,
+    })
+  } catch (error) {
+    console.log('Adding request to history failed.')
+  }
   return NextResponse.json({ data })
 }
 

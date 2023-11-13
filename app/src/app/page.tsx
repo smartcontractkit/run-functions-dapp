@@ -10,6 +10,7 @@ import { Coordinates } from '@/types'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import History from './history'
 
 export default async function Home({
   searchParams,
@@ -18,6 +19,8 @@ export default async function Home({
 }) {
   const latParam = searchParams['lat'] as string
   const lonParam = searchParams['lon'] as string
+  const cityParam = searchParams['city'] as string
+  const countryParam = searchParams['country'] as string
 
   let coordinates: Coordinates | undefined
   if (latParam && lonParam) {
@@ -38,8 +41,8 @@ export default async function Home({
                 Functions.
               </h2>
               <p className="text-base text-muted-foreground md:text-xl">
-                Perform custom computation off-chain using Web2 data in your smart
-                contract.
+                Perform custom computation off-chain using Web2 data in your
+                smart contract.
               </p>
             </div>
             <div />
@@ -166,12 +169,16 @@ export default async function Home({
               <OnchainData
                 key={`onchain-${latParam}${lonParam}`}
                 coordinates={coordinates}
+                city={cityParam}
+                country={countryParam}
               />
             </div>
           </>
         )}
       </div>
-      <UnderTheHood />
+      <UnderTheHood>
+        <History />
+      </UnderTheHood>
     </main>
   )
 }
