@@ -56,6 +56,18 @@ You can get those from your Chainlink platform coordinator.
 
 Run `npm run dev` in your terminal, and then open [localhost:3000](http://localhost:3000) in your browser.
 
+### Funding Transactions
+
+The dApp is designed so the end user does not have to connect a wallet nor create a Chainlink Functions subscription. This is all handled by the dApp. 
+
+Transactions are sent from the backend, which is a Next.js API route. The backend is responsible for signing and broadcasting transactions using the private key provided in the `.env` file. Make sure to fund the wallet with some testnet tokens before running the dApp.
+
+The fee for the Chainlink Functions request is paid from the subscription balance which is encoded in the contract at the time of deployment. The Functions subscription is also funded by the dApp owner and is not required from the end user.
+
+### Rate Limiting
+
+The dApp uses a rate limiting mechanism to prevent spamming the backend with requests. The rate limiting is implemented using Vercel KV and is based on the IP address of the user. The rate limit is set to 3 request per 10 minutes. The rate limit can be configured by changing the `RATELIMIT_IP_EXCEPTION_LIST` environment variable.
+
 ### Tech Stack
 
 -   [Next.js](https://nextjs.org/)
