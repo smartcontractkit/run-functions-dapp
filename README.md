@@ -68,6 +68,10 @@ The fee for the Chainlink Functions request is paid from the subscription balanc
 
 The dApp uses a rate limiting mechanism to prevent spamming the backend with requests. The rate limiting is implemented using Vercel KV and is based on the IP address of the user. The rate limit is set to 3 request per 10 minutes. The rate limit can be configured by changing the `RATELIMIT_IP_EXCEPTION_LIST` environment variable.
 
+### Recent Requests
+
+The frontend displays the last 10 requests made to the backend. The requests and their results are stored in Vercel KV and are fetched from the backend.
+
 ### Tech Stack
 
 -   [Next.js](https://nextjs.org/)
