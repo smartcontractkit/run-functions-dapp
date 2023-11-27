@@ -78,6 +78,7 @@ The frontend displays the last 10 requests made to the backend. The requests and
 -   [TypeScript](https://www.typescriptlang.org/)
 -   [Tailwind CSS](https://tailwindcss.com/)
 -   [shadcn/ui](https://ui.shadcn.com/)
+-   [React Syntax Highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter)
 -   [Ethers](https://docs.ethers.io/v5/)
 
 ## Contracts
