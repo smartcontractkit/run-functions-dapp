@@ -2,38 +2,24 @@ import UnderTheHood from './under-the-hood'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { Card } from '@/components/ui/card'
-import { CityInput } from '@/components/city-input'
-import LoadingSpinner from '@/components/loading-spinner'
-import { Coordinates } from '@/types'
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
-import History from './history'
 import { OffchainResponse } from './offchain-response'
 import { OnchainData } from './onchain-data'
+import LoadingSpinner from '@/components/loading-spinner'
+import { Coordinates } from '@/types'
+import History from './history'
+import { HandleInput } from '@/components/handle-input'
 
-export default async function OpenMeteo({
+export default async function XPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const latParam = searchParams['lat'] as string
-  const lonParam = searchParams['lon'] as string
-  const cityParam = searchParams['city'] as string
-  const countryParam = searchParams['country'] as string
-
-  let coordinates: Coordinates | undefined
-  if (latParam && lonParam) {
-    coordinates = {
-      latitude: parseFloat(latParam),
-      longitude: parseFloat(lonParam),
-    }
-  }
+  const handle = searchParams['handle'] as string
 
   return (
     <main className="container px-6 md:px-10">
       <div className="grid gap-10 border-b border-b-border py-10 md:grid-cols-[1fr_4px_1fr_4px_1fr]">
-        {!coordinates && (
+        {!handle && (
           <>
             <div>
               <h2 className="mb-4 text-2xl font-medium tracking-[-0.24px] md:mb-8 md:text-[32px] md:leading-[42px] md:tracking-[-0.64px]">
@@ -50,45 +36,31 @@ export default async function OpenMeteo({
         )}
         <div>
           <div className="mb-7 flex items-center space-x-2">
-            <Image src="/globe.svg" width={20} height={20} alt="globe" />
+            <Image
+              src="/dev-expert.svg"
+              width={20}
+              height={20}
+              alt="dev-expert"
+            />
             <h3 className="text-2xl font-medium tracking-[-0.24px]">
-              Enter a City
+              Enter an X account
             </h3>
           </div>
           <Card className="mb-7 p-4">
             <label className="mb-2 text-sm font-[450]">API Used</label>
-            <div className="-ml-4 flex items-center space-x-3">
-              <Link
-                target="_blank"
-                rel="noreferrer"
-                href="https://open-meteo.com"
-                className={cn(buttonVariants({ variant: 'link' }), 'py-3')}
-              >
-                <Image
-                  src="/open-meteo.jpeg"
-                  width={24}
-                  height={24}
-                  alt="open-meteo"
-                />
-                <span className="ml-2 mr-1 inline-block text-xl font-medium text-[#8CA5E1]">
-                  Open-Meteo
-                </span>
-                <Image
-                  src="/arrow-go-to-up.svg"
-                  width={12}
-                  height={12}
-                  alt="external"
-                  className="m-0 -mt-2 rounded"
-                />
-              </Link>
+            <div className="flex items-center space-x-3">
+              <Image src="/x.svg" width={20} height={20} alt="x" />
+              <span className="text-xl font-medium  text-muted-foreground">
+                X (formerly Twitter)
+              </span>
             </div>
           </Card>
           <label className="text-base font-[450] text-card-foreground">
             Parameters
           </label>
-          <CityInput />
+          <HandleInput />
         </div>
-        {coordinates && (
+        {handle && (
           <>
             <div className="flex h-[13px] items-start md:hidden">
               <div className="mr-[-1px] grow border-t border-t-border" />
@@ -122,7 +94,7 @@ export default async function OpenMeteo({
                 </h3>
               </div>
               <Suspense
-                key={`offchain-${latParam}${lonParam}`}
+                key={`offchain-${handle}`}
                 fallback={
                   <div className="flex h-[252px] flex-col items-center justify-center space-y-2 rounded bg-[#181D29]">
                     <LoadingSpinner />
@@ -132,7 +104,7 @@ export default async function OpenMeteo({
                   </div>
                 }
               >
-                <OffchainResponse coordinates={coordinates} />
+                <OffchainResponse handle={handle} />
               </Suspense>
             </div>
             <div className="flex h-[13px] items-start md:hidden">
@@ -166,12 +138,7 @@ export default async function OpenMeteo({
                   Onchain Data
                 </h3>
               </div>
-              <OnchainData
-                key={`onchain-${latParam}${lonParam}`}
-                coordinates={coordinates}
-                city={cityParam}
-                country={countryParam}
-              />
+              <OnchainData key={`onchain-${handle}`} handle={handle} />
             </div>
           </>
         )}
