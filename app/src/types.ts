@@ -26,7 +26,7 @@ export type WeatherResponse = {
   }
 } & Coordinates
 
-export type HistoryEntry = {
+export type WeatherHistoryEntry = {
   txHash: string
   temperature: string
   timestamp: number
@@ -34,4 +34,12 @@ export type HistoryEntry = {
   weatherCode: string
   city: string
   country: string
+}
+
+export type TweetHistoryEntry = {
+  txHash: string
+  username: string
+  profileImageUrl: string
+  tweetText: string
+  timestamp: number
 }

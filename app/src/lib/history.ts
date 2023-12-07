@@ -1,4 +1,4 @@
-import { HistoryEntry } from '@/types'
+import { WeatherHistoryEntry } from '@/types'
 import { kv } from '@vercel/kv'
 import {
   fetchCurrentWeather,
@@ -21,7 +21,7 @@ export const addToHistory = async ({
   city: string
   country: string
 }) => {
-  const currentEntries = await kv.lrange<HistoryEntry>('history', 0, -1)
+  const currentEntries = await kv.lrange<WeatherHistoryEntry>('history', 0, -1)
   if (currentEntries.some((e) => e.txHash === txHash)) {
     throw new Error()
   }
@@ -45,5 +45,5 @@ export const addToHistory = async ({
     weatherCode,
     temperatureUnit,
   }
-  await kv.lpush<HistoryEntry>('history', historyEntry)
+  await kv.lpush<WeatherHistoryEntry>('history', historyEntry)
 }
