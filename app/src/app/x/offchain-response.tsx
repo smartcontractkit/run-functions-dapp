@@ -1,5 +1,6 @@
 import CodeBlock from '@/components/code-block'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { fetchTweetData, getTweetText } from '@/lib/fetch-tweet'
 import { firaCode } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 
@@ -8,10 +9,9 @@ type OffchainResponseProps = {
 }
 
 export const OffchainResponse = async ({ handle }: OffchainResponseProps) => {
-  const userData = handle
-
-  const rawData = JSON.stringify(userData, null, 4)
-  const parsedData = `${handle}`
+  const tweetData = await fetchTweetData(handle)
+  const rawData = JSON.stringify(tweetData, null, 4)
+  const parsedData = getTweetText(tweetData)
 
   return (
     <>

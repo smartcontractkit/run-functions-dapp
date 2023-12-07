@@ -36,6 +36,33 @@ export type WeatherHistoryEntry = {
   country: string
 }
 
+export type TweetResponse = {
+  data?: {
+    id: string
+    username: string
+    name: string
+    profile_img_url: string
+    most_recent_tweet_id: string
+  }
+  includes?: {
+    tweets: {
+      text: string
+      edit_history_tweet_ids: string[]
+      id: string
+      created_at: string
+    }[]
+  }
+  errors?: {
+    value: string
+    detail: string
+    title: string
+    resource_type: string
+    parameter: string
+    resource_id: string
+    type: string
+  }[]
+}
+
 export type TweetHistoryEntry = {
   txHash: string
   username: string
