@@ -29,8 +29,8 @@ export const HandleInput = () => {
 
   return (
     <>
-      <div className="mb-2 flex w-full items-center space-x-1 rounded-md border border-input bg-[#181D29] px-4 py-3">
-        <span>@</span>
+      <div className="my-2 flex w-full items-center space-x-1 rounded-md border border-input bg-[#181D29] px-4 py-3">
+        <span className="text-base leading-5">@</span>
         <Input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}

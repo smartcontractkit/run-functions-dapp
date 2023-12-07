@@ -8,6 +8,7 @@ import LoadingSpinner from '@/components/loading-spinner'
 import { Coordinates } from '@/types'
 import History from './history'
 import { HandleInput } from '@/components/handle-input'
+import { ApiSwitch } from '@/components/api-switch'
 
 export default async function XPage({
   searchParams,
@@ -35,26 +36,7 @@ export default async function XPage({
           </>
         )}
         <div>
-          <div className="mb-7 flex items-center space-x-2">
-            <Image
-              src="/dev-expert.svg"
-              width={20}
-              height={20}
-              alt="dev-expert"
-            />
-            <h3 className="text-2xl font-medium tracking-[-0.24px]">
-              Enter an X account
-            </h3>
-          </div>
-          <Card className="mb-7 p-4">
-            <label className="mb-2 text-sm font-[450]">API Used</label>
-            <div className="flex items-center space-x-3">
-              <Image src="/x.svg" width={20} height={20} alt="x" />
-              <span className="text-xl font-medium  text-muted-foreground">
-                X (formerly Twitter)
-              </span>
-            </div>
-          </Card>
+          <ApiSwitch />
           <label className="text-base font-[450] text-card-foreground">
             Parameters
           </label>

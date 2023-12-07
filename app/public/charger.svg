@@ -1,0 +1,39 @@
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="charger" clip-path="url(#clip0_744_11343)">
+        <g id="Vector">
+            <g filter="url(#filter0_i_744_11343)">
+                <path
+                    d="M9 16.25C7.4087 16.25 5.88258 15.6179 4.75736 14.4926C3.63214 13.3674 3 11.8413 3 10.25V7.25C3 6.85218 3.15804 6.47064 3.43934 6.18934C3.72064 5.90804 4.10218 5.75 4.5 5.75H13.5C13.8978 5.75 14.2794 5.90804 14.5607 6.18934C14.842 6.47064 15 6.85218 15 7.25V10.25C15 11.8413 14.3679 13.3674 13.2426 14.4926C12.1174 15.6179 10.5913 16.25 9 16.25Z"
+                    fill="white" />
+            </g>
+            <path
+                d="M9 16.25C7.4087 16.25 5.88258 15.6179 4.75736 14.4926C3.63214 13.3674 3 11.8413 3 10.25V7.25C3 6.85218 3.15804 6.47064 3.43934 6.18934C3.72064 5.90804 4.10218 5.75 4.5 5.75H13.5C13.8978 5.75 14.2794 5.90804 14.5607 6.18934C14.842 6.47064 15 6.85218 15 7.25V10.25C15 11.8413 14.3679 13.3674 13.2426 14.4926C12.1174 15.6179 10.5913 16.25 9 16.25Z"
+                stroke="#375BD2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <path id="Vector_2" d="M6 5.75V1.25" stroke="#375BD2" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        <path id="Vector_3" d="M12 5.75V1.25" stroke="#375BD2" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        <path id="Vector_4"
+            d="M9 16.25V19.25C9 20.0456 9.31607 20.8087 9.87868 21.3713C10.4413 21.9339 11.2044 22.25 12 22.25C12.7956 22.25 13.5587 21.9339 14.1213 21.3713C14.6839 20.8087 15 20.0456 15 19.25C15 18.4544 15.3161 17.6913 15.8787 17.1287C16.4413 16.5661 17.2044 16.25 18 16.25V16.25C18.7956 16.25 19.5587 16.5661 20.1213 17.1287C20.6839 17.6913 21 18.4544 21 19.25V23.75"
+            stroke="#375BD2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path id="Vector_5" d="M7.5 8.75H10.5" stroke="#375BD2" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+    </g>
+    <defs>
+        <filter id="filter0_i_744_11343" x="2.25" y="5" width="13.5" height="12" filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha" />
+            <feOffset dx="-3" dy="1" />
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0.87451 0 0 0 0 0.905882 0 0 0 0 0.984314 0 0 0 1 0" />
+            <feBlend mode="normal" in2="shape" result="effect1_innerShadow_744_11343" />
+        </filter>
+        <clipPath id="clip0_744_11343">
+            <rect width="24" height="24" fill="white" transform="translate(0 0.5)" />
+        </clipPath>
+    </defs>
+</svg>
