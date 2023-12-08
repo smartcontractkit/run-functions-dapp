@@ -1,7 +1,9 @@
 import 'server-only'
 import { ethers } from 'ethers'
 import { weatherConsumerABI } from '@/config/contracts'
-import { Coordinates } from '@/types'
+import { Coordinates, TweetHistoryEntry } from '@/types'
+import { fetchTweetData } from './fetch-tweet'
+import { kv } from '@vercel/kv'
 
 const getWeatherContract = () => {
   const provider = new ethers.JsonRpcProvider(process.env.NETWORK_RPC_URL)
@@ -37,4 +39,17 @@ export const requestWeatherOnchain = async (location: Coordinates) => {
   const receipt = await tx.wait()
   const requestId = receipt?.logs[2].args[0] as string
   return { tx, requestId }
+}
+
+export const getTweetOnchain = async (txHash: string) => {
+  // Mock
+  const entries = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
+  return entries.find((e) => e.txHash === txHash)
+}
+
+export const requestTweetOnchain = async (username: string) => {
+  // Mock
+  const randomStr = Math.random().toString(36).substring(2, 12)
+  const tweet = await fetchTweetData(username)
+  return { txHash: randomStr, tweet }
 }

@@ -8,7 +8,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import CodeBlock from '@/components/code-block'
 import LoadingSpinner from '@/components/loading-spinner'
 import { cn } from '@/lib/utils'
-import { Coordinates } from '@/types'
 import { firaCode } from '@/lib/fonts'
 
 type OnchainDataProps = {
@@ -17,40 +16,36 @@ type OnchainDataProps = {
 
 export const OnchainData = ({ handle }: OnchainDataProps) => {
   const [txHash, setTxHash] = useState()
-  const [requestId, setRequestId] = useState()
-  const [onchainData, setOnchainData] = useState(handle)
+  const [onchainData, setOnchainData] = useState()
   const [error, setError] = useState()
 
   useEffect(() => {
     const requestOnchainTweet = async () => {
-      // const response = await fetch('/api/onchain-weather', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ ...coordinates, city, country }),
-      // })
-      // const result = await response.json()
-      // if (result.error) {
-      //   setError(result.error)
-      //   return
-      // }
-      // setTxHash(result.data.txHash)
-      // setRequestId(result.data.requestId)
+      const response = await fetch('/api/onchain-tweet', {
+        method: 'POST',
+        body: JSON.stringify({ username: handle }),
+      })
+      const result = await response.json()
+      if (result.error) {
+        setError(result.error)
+        return
+      }
+      setTxHash(result.data.txHash)
     }
     requestOnchainTweet()
   }, [handle])
 
-  // useEffect(() => {
-  //   if (!requestId) return
-  //   const interval = setInterval(async () => {
-  //     const response = await fetch(
-  //       `/api/onchain-weather?requestId=${requestId}`,
-  //     )
-  //     const result = await response.json()
-  //     if (result.data) {
-  //       clearInterval(interval)
-  //       setOnchainData(result.data)
-  //     }
-  //   }, 1000)
-  // }, [requestId])
+  useEffect(() => {
+    if (!txHash) return
+    const interval = setInterval(async () => {
+      const response = await fetch(`/api/onchain-tweet?txHash=${txHash}`)
+      const result = await response.json()
+      if (result.data) {
+        clearInterval(interval)
+        setOnchainData(result.data)
+      }
+    }, 1000)
+  }, [txHash])
 
   if (error) {
     return (
@@ -87,7 +82,7 @@ export const OnchainData = ({ handle }: OnchainDataProps) => {
       <ScrollArea
         className={cn('mb-3 mt-2 h-[173px] rounded', firaCode.variable)}
       >
-        <CodeBlock codeString={JSON.stringify(handle, null, 4)} />
+        <CodeBlock codeString={JSON.stringify(onchainData, null, 4)} />
       </ScrollArea>
       <div className="flex items-center justify-between">
         <Link

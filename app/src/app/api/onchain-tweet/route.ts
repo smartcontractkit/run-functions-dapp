@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Ratelimit } from '@upstash/ratelimit'
 import { kv } from '@vercel/kv'
 
-import { getWeatherOnchain, requestWeatherOnchain } from '@/lib/request-onchain'
-import { addToWeatherHistory } from '@/lib/history'
+import {
+  getTweetOnchain,
+  getWeatherOnchain,
+  requestTweetOnchain,
+} from '@/lib/request-onchain'
+import { addToTweetHistory } from '@/lib/history'
+import { getProfileImageUrl, getTweetText } from '@/lib/fetch-tweet'
 
 const ratelimit = new Ratelimit({
   redis: kv,
@@ -24,26 +29,22 @@ export async function POST(request: NextRequest) {
   }
 
   const params = await request.json()
-  if (!params || !params.latitude || !params.longitude)
-    return NextResponse.error()
+  if (!params || !params.username) return NextResponse.error()
 
-  const result = await requestWeatherOnchain({
-    latitude: params.latitude,
-    longitude: params.longitude,
-  })
-  if (!result || !result.requestId) return NextResponse.error()
+  const { username } = params
 
-  const data = {
-    requestId: result.requestId,
-    txHash: result.tx.hash,
-  }
+  const data = await requestTweetOnchain(username)
+  if (!data.txHash) return NextResponse.error()
+
+  const { txHash, tweet } = data
+  const tweetText = getTweetText(tweet)
+  const profileImageUrl = getProfileImageUrl(tweet)
   try {
-    await addToWeatherHistory({
-      txHash: data.txHash,
-      latitude: params.latitude,
-      longitude: params.longitude,
-      city: params.city,
-      country: params.country,
+    await addToTweetHistory({
+      txHash,
+      username,
+      profileImageUrl,
+      tweetText,
     })
   } catch (error) {
     console.log('Adding request to history failed.')
@@ -53,10 +54,10 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const requestId = searchParams.get('requestId') || ''
-  if (!requestId) return NextResponse.error()
+  const txHash = searchParams.get('txHash') || ''
+  if (!txHash) return NextResponse.error()
 
-  const data = await getWeatherOnchain(requestId)
+  const data = await getTweetOnchain(txHash)
 
   return NextResponse.json({ data })
 }
