@@ -1,4 +1,4 @@
-import { WeatherHistoryEntry } from '@/types'
+import { TweetHistoryEntry, WeatherHistoryEntry } from '@/types'
 import { kv } from '@vercel/kv'
 import {
   fetchCurrentWeather,
@@ -8,7 +8,7 @@ import {
 } from './fetch-weather'
 import { getUnixTime } from 'date-fns'
 
-export const addToHistory = async ({
+export const addToWeatherHistory = async ({
   txHash,
   latitude,
   longitude,
@@ -46,4 +46,33 @@ export const addToHistory = async ({
     temperatureUnit,
   }
   await kv.lpush<WeatherHistoryEntry>('history', historyEntry)
+}
+
+export const addToTweetHistory = async ({
+  txHash,
+  username,
+  profileImageUrl,
+  tweetText,
+}: {
+  txHash: string
+  username: string
+  profileImageUrl: string
+  tweetText: string
+}) => {
+  const currentEntries = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
+  if (currentEntries.some((e) => e.txHash === txHash)) {
+    throw new Error()
+  }
+  if (currentEntries.length >= 10) {
+    await kv.rpop('tweets', 1)
+  }
+  const timestamp = getUnixTime(Date.now())
+  const tweetEntry = {
+    txHash,
+    username,
+    profileImageUrl,
+    tweetText,
+    timestamp,
+  }
+  await kv.lpush<TweetHistoryEntry>('tweets', tweetEntry)
 }

@@ -41,7 +41,7 @@ export type TweetResponse = {
     id: string
     username: string
     name: string
-    profile_img_url: string
+    profile_image_url: string
     most_recent_tweet_id: string
   }
   includes?: {

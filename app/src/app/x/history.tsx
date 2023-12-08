@@ -9,7 +9,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 
 const History = async () => {
   const data = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
-
   return (
     <div className="lg:w-[340px] lg:shrink-0 lg:border-l lg:border-l-border lg:pl-10">
       <h3 className="mb-9 text-2xl font-medium tracking-[-0.24px]">
