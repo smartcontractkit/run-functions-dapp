@@ -28,7 +28,14 @@ const History = async () => {
           <div className="space-y-4">
             {data.map(
               (
-                { txHash, username, profileImageUrl, tweetText, timestamp },
+                {
+                  txHash,
+                  name,
+                  username,
+                  profileImageUrl,
+                  tweetText,
+                  timestamp,
+                },
                 i,
               ) => (
                 <a
@@ -39,35 +46,38 @@ const History = async () => {
                     txHash ? `https://testnet.snowtrace.io/tx/${txHash}` : '#'
                   }
                   className={cn(
-                    'block space-y-2 rounded-lg bg-[#181D29] p-6',
+                    'block space-y-3 rounded-lg bg-[#181D29] p-4 font-[450]',
                     i === 3 && 'opacity-75',
                     i >= 4 && 'opacity-50',
                   )}
                 >
+                  <div className="flex items-center space-x-2">
+                    <Image
+                      src={profileImageUrl}
+                      alt={profileImageUrl}
+                      width={36}
+                      height={36}
+                      className="rounded-full"
+                    />
+                    <div className="flex flex-col justify-between space-y-1">
+                      <span className="text-sm leading-4">{name}</span>
+                      <span className="text-xs text-[#6D7380]">
+                        {`@${username}`}
+                      </span>
+                    </div>
+                  </div>
                   <div>
                     {tweetText.split('\n').map((t, i) => (
-                      <p key={i} className="min-h-[16px] font-[450] leading-4">
+                      <p key={i} className="min-h-[16px] leading-4">
                         {t}
                       </p>
                     ))}
                   </div>
-                  <Image
-                    src={profileImageUrl}
-                    alt={profileImageUrl}
-                    width={24}
-                    height={24}
-                    className="rounded-full"
-                  />
-                  <div className="flex justify-between">
-                    <span className="text-xs text-[#6D7380]">
-                      {`@${username}`}
-                    </span>
-                    <span className="text-xs text-[#6D7380]">
-                      {formatDistanceToNow(fromUnixTime(timestamp), {
-                        addSuffix: true,
-                      })}
-                    </span>
-                  </div>
+                  <span className="text-xs text-[#6D7380]">
+                    {formatDistanceToNow(fromUnixTime(timestamp), {
+                      addSuffix: true,
+                    })}
+                  </span>
                 </a>
               ),
             )}

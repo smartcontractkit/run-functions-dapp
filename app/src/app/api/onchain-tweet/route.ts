@@ -8,7 +8,11 @@ import {
   requestTweetOnchain,
 } from '@/lib/request-onchain'
 import { addToTweetHistory } from '@/lib/history'
-import { getProfileImageUrl, getTweetText } from '@/lib/fetch-tweet'
+import {
+  getProfileImageUrl,
+  getTweetAuthorName,
+  getTweetText,
+} from '@/lib/fetch-tweet'
 
 const ratelimit = new Ratelimit({
   redis: kv,
@@ -39,10 +43,12 @@ export async function POST(request: NextRequest) {
   const { txHash, tweet } = data
   const tweetText = getTweetText(tweet)
   const profileImageUrl = getProfileImageUrl(tweet)
+  const name = getTweetAuthorName(tweet)
   try {
     await addToTweetHistory({
       txHash,
       username,
+      name,
       profileImageUrl,
       tweetText,
     })

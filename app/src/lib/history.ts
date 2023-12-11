@@ -51,11 +51,13 @@ export const addToWeatherHistory = async ({
 export const addToTweetHistory = async ({
   txHash,
   username,
+  name,
   profileImageUrl,
   tweetText,
 }: {
   txHash: string
   username: string
+  name: string
   profileImageUrl: string
   tweetText: string
 }) => {
@@ -70,6 +72,7 @@ export const addToTweetHistory = async ({
   const tweetEntry = {
     txHash,
     username,
+    name,
     profileImageUrl,
     tweetText,
     timestamp,

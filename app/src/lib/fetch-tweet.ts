@@ -47,3 +47,10 @@ export const getProfileImageUrl = (tweetResponse: TweetResponse) => {
   }
   return 'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 }
+
+export const getTweetAuthorName = (tweetResponse: TweetResponse) => {
+  if (tweetResponse.data?.name) {
+    return tweetResponse.data.name
+  }
+  return ''
+}

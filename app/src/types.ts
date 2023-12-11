@@ -66,6 +66,7 @@ export type TweetResponse = {
 export type TweetHistoryEntry = {
   txHash: string
   username: string
+  name: string
   profileImageUrl: string
   tweetText: string
   timestamp: number
