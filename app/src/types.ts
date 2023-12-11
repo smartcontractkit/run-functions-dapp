@@ -36,7 +36,7 @@ export type WeatherHistoryEntry = {
   country: string
 }
 
-export type TweetResponse = {
+export type MostRecentTweetResponse = {
   data?: {
     id: string
     username: string
@@ -50,6 +50,9 @@ export type TweetResponse = {
       edit_history_tweet_ids: string[]
       id: string
       created_at: string
+      attachments?: {
+        media_keys?: string[]
+      }
     }[]
   }
   errors?: {
@@ -63,6 +66,31 @@ export type TweetResponse = {
   }[]
 }
 
+export type TweetMediaResponse = {
+  data?: {
+    edit_history_tweet_ids: string[]
+    id: string
+    text: string
+    attachments?: {
+      media_keys?: string[]
+    }
+  }
+  includes?: {
+    media: {
+      media_key: string
+      type: 'animated_gif' | 'photo' | 'video'
+      url?: string
+      preview_image_url?: string
+    }[]
+  }
+  errors?: {
+    parameters: {
+      [key: string]: string[]
+    }
+    message: string
+  }
+}
+
 export type TweetHistoryEntry = {
   txHash: string
   username: string
@@ -70,4 +98,5 @@ export type TweetHistoryEntry = {
   profileImageUrl: string
   tweetText: string
   timestamp: number
+  media: string[]
 }

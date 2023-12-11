@@ -54,12 +54,14 @@ export const addToTweetHistory = async ({
   name,
   profileImageUrl,
   tweetText,
+  media,
 }: {
   txHash: string
   username: string
   name: string
   profileImageUrl: string
   tweetText: string
+  media: string[]
 }) => {
   const currentEntries = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
   if (currentEntries.some((e) => e.txHash === txHash)) {
@@ -76,6 +78,7 @@ export const addToTweetHistory = async ({
     profileImageUrl,
     tweetText,
     timestamp,
+    media,
   }
   await kv.lpush<TweetHistoryEntry>('tweets', tweetEntry)
 }

@@ -35,6 +35,7 @@ const History = async () => {
                   profileImageUrl,
                   tweetText,
                   timestamp,
+                  media,
                 },
                 i,
               ) => (
@@ -73,6 +74,20 @@ const History = async () => {
                       </p>
                     ))}
                   </div>
+                  {media?.length > 0 &&
+                    media.map((url) => {
+                      console.log(url)
+                      return (
+                        <Image
+                          key={url}
+                          src={url}
+                          alt={url}
+                          width={300}
+                          height={300}
+                          className="rounded-lg"
+                        />
+                      )
+                    })}
                   <span className="text-xs text-[#6D7380]">
                     {formatDistanceToNow(fromUnixTime(timestamp), {
                       addSuffix: true,
