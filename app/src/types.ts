@@ -99,4 +99,5 @@ export type TweetHistoryEntry = {
   tweetText: string
   timestamp: number
   media: string[]
+  tweetId: string
 }

@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
       profileImageUrl,
       tweetText,
       media,
+      tweetId,
     })
   } catch (error) {
     console.log('Adding request to history failed.')

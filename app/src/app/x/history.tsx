@@ -36,6 +36,7 @@ const History = async () => {
                   tweetText,
                   timestamp,
                   media,
+                  tweetId,
                 },
                 i,
               ) => (
@@ -43,9 +44,7 @@ const History = async () => {
                   key={txHash}
                   target="_blank"
                   rel="noreferrer"
-                  href={
-                    txHash ? `https://testnet.snowtrace.io/tx/${txHash}` : '#'
-                  }
+                  href={`https://twitter.com/${username}/status/${tweetId}`}
                   className={cn(
                     'block space-y-3 rounded-lg bg-[#181D29] p-4 font-[450]',
                     i === 3 && 'opacity-75',
