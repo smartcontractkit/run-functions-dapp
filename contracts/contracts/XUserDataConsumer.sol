@@ -94,7 +94,7 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     bytes32 requestId = _sendRequest(SOURCE_LAST_TWEET_INFO, args, slotId, version);
 
     requests[requestId].responseType = ResponseType.UserLastTweet;
-    emit UserLastTweetRequested(requestId, username);
+    emit UserLastTweetRequested(requestId, userId);
   }
 
   /**

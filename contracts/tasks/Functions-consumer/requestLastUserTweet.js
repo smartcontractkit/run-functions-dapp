@@ -13,7 +13,7 @@ task("functions-request-tweet", "Request User Last Tweet")
     const tx = await contract.requestLastTweet(
       taskArgs.userid,
       parseInt(taskArgs.slotid),
-      parseInt(taskArgs.scrversion)
+      parseInt(taskArgs.secretversion)
     )
     console.log("Tx Hash:", tx.hash)
     const receipt = await tx.wait()

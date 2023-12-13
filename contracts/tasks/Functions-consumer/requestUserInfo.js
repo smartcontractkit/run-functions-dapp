@@ -9,11 +9,11 @@ task("functions-request-info", "Request User Info")
   .addParam("slotid", "Version")
   .addParam("secretversion", "Secret version")
   .setAction(async (taskArgs) => {
-    const contract = await ethers.getContractAt("XUserConsumer", taskArgs.contract)
+    const contract = await ethers.getContractAt("XUserDataConsumer", taskArgs.contract)
     const tx = await contract.requestUserInfo(
       taskArgs.username,
       parseInt(taskArgs.slotid),
-      parseInt(taskArgs.scrversion)
+      parseInt(taskArgs.secretversion)
     )
     console.log("Tx Hash:", tx.hash)
     const receipt = await tx.wait()
