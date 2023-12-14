@@ -13,7 +13,7 @@ const truncate = (string: string) =>
 const History = async () => {
   const data = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
   return (
-    <div className="lg:w-[340px] lg:shrink-0 lg:border-l lg:border-l-border lg:pl-10">
+    <div className="lg:border-l-border lg:w-[340px] lg:shrink-0 lg:border-l lg:pl-10">
       <h3 className="mb-9 text-2xl font-medium tracking-[-0.24px]">
         Recent Requests
       </h3>
@@ -21,7 +21,7 @@ const History = async () => {
         fallback={
           <div className="flex h-[512px] flex-col items-center justify-center space-y-2 rounded bg-[#181D29]">
             <LoadingSpinner />
-            <span className="text-sm font-[450] text-card-foreground">
+            <span className="text-card-foreground text-sm font-[450]">
               Data currently loading...
             </span>
           </div>
@@ -47,7 +47,7 @@ const History = async () => {
                   key={txHash}
                   target="_blank"
                   rel="noreferrer"
-                  href={`https://twitter.com/${username}/status/${tweetId}`}
+                  href={`https://x.com/${username}/status/${tweetId}`}
                   className={cn(
                     'block space-y-3 rounded-lg bg-[#181D29] p-4 font-[450]',
                     i === 3 && 'opacity-75',
@@ -63,8 +63,8 @@ const History = async () => {
                       className="rounded-full"
                     />
                     <div className="flex flex-col justify-between space-y-1">
-                      <span className="text-sm leading-4">{name}</span>
-                      <span className="text-xs text-[#6D7380]">
+                      <span className="text-[14px] leading-4">{name}</span>
+                      <span className="text-[12px] text-[#6D7380]">
                         {`@${username}`}
                       </span>
                     </div>
@@ -92,7 +92,14 @@ const History = async () => {
                         />
                       )
                     })}
-                  <span className="text-xs text-[#6D7380]">
+                  <a
+                    className="block break-words text-[14px] text-[#4771D1]"
+                    href={`https://x.com/${username}/status/${tweetId}`}
+                  >
+                    https://x.com/{username}/status/
+                    <br></br>{tweetId}
+                  </a>
+                  <span className="text-[14px] text-[#6D7380]">
                     {formatDistanceToNow(fromUnixTime(timestamp), {
                       addSuffix: true,
                     })}
