@@ -43,11 +43,19 @@ const History = async () => {
                 },
                 i,
               ) => (
-                <a
+                // <a
+                //   key={txHash}
+                //   target="_blank"
+                //   rel="noreferrer"
+                //   href={`https://x.com/${username}/status/${tweetId}`}
+                //   className={cn(
+                //     'block space-y-3 rounded-lg bg-[#181D29] p-4 font-[450]',
+                //     i === 3 && 'opacity-75',
+                //     i >= 4 && 'opacity-50',
+                //   )}
+                // >
+                <div
                   key={txHash}
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`https://x.com/${username}/status/${tweetId}`}
                   className={cn(
                     'block space-y-3 rounded-lg bg-[#181D29] p-4 font-[450]',
                     i === 3 && 'opacity-75',
@@ -92,19 +100,28 @@ const History = async () => {
                         />
                       )
                     })}
-                  <a
-                    className="block break-words text-[14px] text-[#4771D1]"
-                    href={`https://x.com/${username}/status/${tweetId}`}
-                  >
-                    https://x.com/{username}/status/
-                    <br></br>{tweetId}
-                  </a>
-                  <span className="text-[14px] text-[#6D7380]">
-                    {formatDistanceToNow(fromUnixTime(timestamp), {
-                      addSuffix: true,
-                    })}
-                  </span>
-                </a>
+
+                  <div className="flex justify-between">
+                    <span className="text-[14px] text-[#4771D1]">
+                      <a href={`https://x.com/${username}/status/${tweetId}`}>
+                        See full post{' '}
+                        <Image
+                          src="/arrow-go-to-up-blue.svg"
+                          width={12}
+                          height={12}
+                          alt="external"
+                          className="m-0 -mt-2 inline rounded"
+                        />
+                      </a>
+                    </span>
+                    <span className="text-[14px] text-[#6D7380]">
+                      {formatDistanceToNow(fromUnixTime(timestamp), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
+                </div>
+                // </a>
               ),
             )}
           </div>
