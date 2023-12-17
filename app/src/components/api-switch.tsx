@@ -86,8 +86,11 @@ export const ApiSwitch = () => {
             </div>
           </Card>
         </PopoverTrigger>
-        <PopoverContent className="flex w-[var(--radix-popper-anchor-width)] flex-col bg-[#181D29] py-2 text-muted-foreground">
-          <Link href="/x" className="flex items-center space-x-4">
+        <PopoverContent className="text-muted-foreground flex w-[var(--radix-popper-anchor-width)] flex-col bg-[#181D29] p-1">
+          <Link
+            href="/x"
+            className="flex items-center space-x-4 px-2 hover:rounded hover:bg-[#252E42]"
+          >
             <Image
               src="/x.svg"
               width={32}
@@ -101,15 +104,18 @@ export const ApiSwitch = () => {
                 'flex flex-col space-y-2 py-3',
               )}
             >
-              <span className="font-medium leading-4">
+              <span className="text-[16px] font-[500] leading-4">
                 X (formerly Twitter)
               </span>
-              <span className="text-xs font-[450]">
+              <span className="text-[14px] font-[450]">
                 Get a user&apos;s latest post and store it onchain.
               </span>
             </div>
           </Link>
-          <Link href="/open-meteo" className="flex items-center space-x-4">
+          <Link
+            href="/open-meteo"
+            className="flex items-center space-x-4 px-2 hover:rounded hover:bg-[#252E42]"
+          >
             <Image
               src="/open-meteo.jpeg"
               width={32}
@@ -123,8 +129,10 @@ export const ApiSwitch = () => {
                 'flex flex-col space-y-2 py-3',
               )}
             >
-              <span className="font-medium leading-4">Open-Meteo</span>
-              <span className="text-xs font-[450]">
+              <span className="text-[16px] font-[500] leading-4">
+                Open-Meteo
+              </span>
+              <span className="text-[14px] font-[450]">
                 Get a city&apos;s weather and store it onchain.
               </span>
             </div>
