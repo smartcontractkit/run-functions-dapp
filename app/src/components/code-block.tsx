@@ -92,6 +92,7 @@ const style: { [key: string]: React.CSSProperties } = {
     margin: '0',
     overflow: 'auto',
     borderRadius: '0.3em',
+    minHeight: '80px',
   },
   'code[class*="language-"]::-moz-selection': {
     background: 'hsla(223, 26%, 13%, 1)',

@@ -29,19 +29,19 @@ export const HandleInput = () => {
 
   return (
     <>
-      <div className="my-2 flex w-full items-center space-x-1 rounded-md border border-input bg-[#181D29] px-4 py-3">
+      <div className="border-input my-2 flex w-full items-center space-x-1 rounded-md border bg-[#181D29] px-4 py-3">
         <span className="text-base leading-5">@</span>
         <Input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="border-0 p-0 placeholder:text-card-foreground"
+          className="placeholder:text-card-foreground border-0 p-0"
           placeholder="X account handle"
         />
       </div>
       <Button
         disabled={!inputValue}
         onClick={() => submit()}
-        className="w-full bg-[#375BD2] py-3 text-xl font-medium leading-[26px] hover:bg-[#375BD2]/90"
+        className="h-[46px] w-full bg-[#375BD2] py-3 text-xl font-medium leading-[26px] hover:bg-[#375BD2]/90"
       >
         Run
         <Image src="/arrow-right.svg" width={36} height={36} alt="arrow" />
