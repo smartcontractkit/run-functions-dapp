@@ -118,7 +118,7 @@ export default async function XPage({
                   Onchain Data
                 </h3>
               </div>
-              <OnchainData key={`onchain-${handle}`} handle={handle} />
+              <OnchainData handle={handle} />
             </div>
           </>
         )}

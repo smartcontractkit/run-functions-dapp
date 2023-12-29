@@ -12,6 +12,7 @@ const truncate = (string: string) =>
 
 const History = async () => {
   const data = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
+
   return (
     <div className="lg:border-l-border lg:w-[340px] lg:shrink-0 lg:border-l lg:pl-10">
       <h3 className="mb-9 text-2xl font-medium tracking-[-0.24px]">
@@ -88,7 +89,6 @@ const History = async () => {
                   </div>
                   {media?.length > 0 &&
                     media.map((url) => {
-                      console.log(url)
                       return (
                         <Image
                           key={url}
@@ -114,11 +114,7 @@ const History = async () => {
                         />
                       </a>
                     </span>
-                    <span className="text-[14px] text-[#6D7380]">
-                      {formatDistanceToNow(fromUnixTime(timestamp), {
-                        addSuffix: true,
-                      })}
-                    </span>
+                    <span className="text-[14px] text-[#6D7380]"></span>
                   </div>
                 </div>
                 // </a>

@@ -4,6 +4,7 @@ import { weatherConsumerABI, xConsumerABI } from '@/config/contracts'
 import { Coordinates, TweetHistoryEntry } from '@/types'
 import { fetchTweetData } from './fetch-tweet'
 import { kv } from '@vercel/kv'
+import { request } from 'http'
 
 /* WEATHER REQUEST */
 
@@ -22,7 +23,7 @@ export const getWeatherOnchain = async (requestId: string) => {
   const contract = getWeatherContract()
   const result = await contract.requests(requestId)
 
-  if (!result.temperature) return null
+  if (!result.temperature) return
 
   return {
     temperature: result.temperature,
@@ -56,17 +57,36 @@ const getXConsumerContract = () => {
   return contract
 }
 
-export const getTweetOnchain = async (txHash: string) => {
-  // Mock
+export const getTweetOnchain = async (requestId: string) => {
   const contract = getXConsumerContract()
-
-  const entries = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
-  return entries.find((e) => e.txHash === txHash)
+  const result = await contract.requests(requestId)
+  return result
 }
 
 export const requestTweetOnchain = async (username: string) => {
-  // Mock
-  const randomStr = Math.random().toString(36).substring(2, 12)
-  const tweet = await fetchTweetData(username)
-  return { txHash: randomStr, tweet }
+  const contract = getXConsumerContract()
+  const userApiCall = await fetch(
+    'https://api.twitter.com/2/users/by/username/' + username,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.TWITTER_API_BEARER_TOKEN}`,
+      },
+    },
+  )
+
+  const userApiResponse = await userApiCall.json()
+
+  const userId = userApiResponse.data.id
+  const tx = await contract.requestLastTweet(
+    userId,
+    0,
+    process.env.X_SECRET_VERSION_ID as string,
+  )
+
+  const receipt = await tx.wait()
+  const txHash = tx.hash
+
+  const requestId = receipt?.logs[2].args[0] as string
+
+  return { username, txHash, requestId }
 }

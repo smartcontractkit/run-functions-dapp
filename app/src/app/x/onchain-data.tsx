@@ -16,6 +16,7 @@ type OnchainDataProps = {
 
 export const OnchainData = ({ handle }: OnchainDataProps) => {
   const [txHash, setTxHash] = useState()
+  const [requestId, setRequestId] = useState()
   const [onchainData, setOnchainData] = useState()
   const [error, setError] = useState()
 
@@ -30,22 +31,24 @@ export const OnchainData = ({ handle }: OnchainDataProps) => {
         setError(result.error)
         return
       }
-      setTxHash(result.data.txHash)
+      setTxHash(result.txHash)
+      setRequestId(result.requestId)
     }
     requestOnchainTweet()
   }, [handle])
 
   useEffect(() => {
-    if (!txHash) return
+    if (!requestId) return
+
     const interval = setInterval(async () => {
-      const response = await fetch(`/api/onchain-tweet?txHash=${txHash}`)
+      const response = await fetch(`/api/onchain-tweet?requestId=${requestId}`)
       const result = await response.json()
-      if (result.data) {
+      if (result.text) {
         clearInterval(interval)
-        setOnchainData(result.data)
+        setOnchainData(result.text)
       }
     }, 1000)
-  }, [txHash])
+  }, [requestId])
 
   if (error) {
     return (

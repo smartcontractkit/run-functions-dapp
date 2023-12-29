@@ -92,6 +92,7 @@ export type TweetMediaResponse = {
 }
 
 export type TweetHistoryEntry = {
+  requestId: string
   txHash: string
   username: string
   name: string
