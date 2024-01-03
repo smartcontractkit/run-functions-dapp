@@ -18,29 +18,15 @@ export const OffchainResponse = async ({ handle }: OffchainResponseProps) => {
       <label className="text-card-foreground text-base font-[450]">
         Raw Data
       </label>
-      <ScrollArea
-        className={cn('mt-2 h-[125px] rounded', firaCode.variable)}
-      >
+      <ScrollArea className={cn('mt-2 h-[125px] rounded', firaCode.variable)}>
         <CodeBlock codeString={rawData} />
       </ScrollArea>
       <label className="text-card-foreground text-base font-[450]">
         Parsed Data / Chainlink Function Output
       </label>
-      <ScrollArea
-        className={cn('mt-2 h-[125px] rounded', firaCode.variable)}
-      >
+      <ScrollArea className={cn('mt-2 h-[125px] rounded', firaCode.variable)}>
         <CodeBlock codeString={parsedData} />
       </ScrollArea>
-      {/* <div className="flex justify-between space-x-4">
-        <div className="flex flex-col justify-end">
-          <label className="mb-2 text-base font-[450] text-card-foreground">
-            Parsed Data / Chainlink Function Output
-          </label>
-          <div className="rounded bg-[#181D29] px-4 py-3 text-sm leading-4 text-muted-foreground">
-            {parsedData}
-          </div>
-        </div>
-      </div> */}
     </>
   )
 }

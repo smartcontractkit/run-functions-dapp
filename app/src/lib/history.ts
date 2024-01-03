@@ -9,9 +9,12 @@ import {
 import { getUnixTime } from 'date-fns'
 import {
   fetchTweetData,
+  fetchTweetMedia,
   getProfileImageUrl,
   getTweetAuthorName,
+  getTweetHasMedia,
   getTweetId,
+  getTweetMediaUrls,
   getTweetText,
 } from './fetch-tweet'
 
@@ -81,6 +84,13 @@ export const addToTweetHistory = async ({
   const timestamp = new Date(
     lastTweetResponse?.includes?.tweets[0].created_at || '',
   ).getTime()
+  const hasMedia = getTweetHasMedia(lastTweetResponse)
+  const media: string[] = []
+  if (hasMedia) {
+    const tweetWithMedia = await fetchTweetMedia(tweetId)
+    const mediaUrls = getTweetMediaUrls(tweetWithMedia)
+    media.push(...mediaUrls)
+  }
 
   const tweetEntry: TweetHistoryEntry = {
     name,
@@ -90,7 +100,7 @@ export const addToTweetHistory = async ({
     tweetText,
     timestamp,
     tweetId,
-    media: [],
+    media,
     requestId,
   }
 

@@ -2,15 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { getTweetOnchain, requestTweetOnchain } from '@/lib/request-onchain'
 import { addToTweetHistory } from '@/lib/history'
-import {
-  fetchTweetMedia,
-  getProfileImageUrl,
-  getTweetAuthorName,
-  getTweetHasMedia,
-  getTweetId,
-  getTweetMediaUrls,
-  getTweetText,
-} from '@/lib/fetch-tweet'
 
 export async function POST(request: NextRequest) {
   const params = await request.json()
