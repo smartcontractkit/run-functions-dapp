@@ -50,7 +50,7 @@ export const ApiSwitch = () => {
                   />
                 </Link>
               )}
-              {pathname === '/x' && (
+              {(pathname === '/x' || pathname === '/') && (
                 <Link
                   target="_blank"
                   rel="noreferrer"
