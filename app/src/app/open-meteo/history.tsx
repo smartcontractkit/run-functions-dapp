@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { kv } from '@vercel/kv'
 import { Suspense } from 'react'
 import LoadingSpinner from '@/components/loading-spinner'
-import { HistoryEntry } from '@/types'
+import { WeatherHistoryEntry } from '@/types'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 const WEATHER_ICONS = {
@@ -23,7 +23,7 @@ const getWeatherIcon = (weatherCode: number) => {
 }
 
 const History = async () => {
-  const data = await kv.lrange<HistoryEntry>('history', 0, -1)
+  const data = await kv.lrange<WeatherHistoryEntry>('history', 0, -1)
 
   return (
     <div className="lg:w-[340px] lg:shrink-0 lg:border-l lg:border-l-border lg:pl-10">

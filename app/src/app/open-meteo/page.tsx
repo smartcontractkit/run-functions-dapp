@@ -1,24 +1,36 @@
-import UnderTheHood from './x/under-the-hood'
+import UnderTheHood from './under-the-hood'
 import Image from 'next/image'
 import { Suspense } from 'react'
-import { OffchainResponse } from './x/offchain-response'
-import { OnchainData } from './x/onchain-data'
+import { CityInput } from '@/components/city-input'
 import LoadingSpinner from '@/components/loading-spinner'
-import History from './x/history'
-import { HandleInput } from '@/components/handle-input'
+import { Coordinates } from '@/types'
+import History from './history'
+import { OffchainResponse } from './offchain-response'
+import { OnchainData } from './onchain-data'
 import { ApiSwitch } from '@/components/api-switch'
 
-export default async function HomePage({
+export default async function OpenMeteo({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const handle = searchParams['handle'] as string
+  const latParam = searchParams['lat'] as string
+  const lonParam = searchParams['lon'] as string
+  const cityParam = searchParams['city'] as string
+  const countryParam = searchParams['country'] as string
+
+  let coordinates: Coordinates | undefined
+  if (latParam && lonParam) {
+    coordinates = {
+      latitude: parseFloat(latParam),
+      longitude: parseFloat(lonParam),
+    }
+  }
 
   return (
     <main className="container px-6 md:px-10">
-      <div className="grid gap-10 border-b border-b-border py-10 md:grid-cols-[1fr_4px_minmax(0,_1fr)_4px_1fr]">
-        {!handle && (
+      <div className="grid gap-10 border-b border-b-border py-10 md:grid-cols-[1fr_4px_1fr_4px_1fr]">
+        {!coordinates && (
           <>
             <div>
               <h2 className="mb-4 text-2xl font-medium tracking-[-0.24px] md:mb-8 md:text-[32px] md:leading-[42px] md:tracking-[-0.64px]">
@@ -38,9 +50,9 @@ export default async function HomePage({
           <label className="text-base font-[450] text-card-foreground">
             Parameters
           </label>
-          <HandleInput />
+          <CityInput />
         </div>
-        {handle && (
+        {coordinates && (
           <>
             <div className="flex h-[13px] items-start md:hidden">
               <div className="mr-[-1px] grow border-t border-t-border" />
@@ -74,7 +86,7 @@ export default async function HomePage({
                 </h3>
               </div>
               <Suspense
-                key={`offchain-${handle}`}
+                key={`offchain-${latParam}${lonParam}`}
                 fallback={
                   <div className="flex h-[252px] flex-col items-center justify-center space-y-2 rounded bg-[#181D29]">
                     <LoadingSpinner />
@@ -84,7 +96,7 @@ export default async function HomePage({
                   </div>
                 }
               >
-                <OffchainResponse handle={handle} />
+                <OffchainResponse coordinates={coordinates} />
               </Suspense>
             </div>
             <div className="flex h-[13px] items-start md:hidden">
@@ -118,7 +130,12 @@ export default async function HomePage({
                   Onchain Data
                 </h3>
               </div>
-              <OnchainData handle={handle} />
+              <OnchainData
+                key={`onchain-${latParam}${lonParam}`}
+                coordinates={coordinates}
+                city={cityParam}
+                country={countryParam}
+              />
             </div>
           </>
         )}
@@ -126,16 +143,6 @@ export default async function HomePage({
       <UnderTheHood>
         <History />
       </UnderTheHood>
-      <footer className="container px-6 py-10 md:px-10">
-        <h2 className="text-2xl font-medium">How It Works</h2>
-        <Image
-          src="/how-it-works-x.jpg"
-          width={1926}
-          height={1318}
-          alt="how-it-works"
-          className="mt-6 rounded-lg border border-border"
-        />
-      </footer>
     </main>
   )
 }

@@ -1,0 +1,42 @@
+name: Upload secrets and deploy to Vercel
+
+env:
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+    POLYGON_MUMBAI_RPC_URL: ${{ secrets.POLYGON_MUMBAI_RPC_URL }}
+    X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+
+on:
+    schedule:
+        - cron: "*/2 * * * *"
+
+jobs:
+    change-environment-variable:
+        name: Upload secrets and deploy to Vercel
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./app
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Upload secrets and get version number
+              id: get-version
+              run: |
+                  SECRET_VERSION=$(bash ../.github/workflows/deploy.sh | bash ../.github/workflows/get-version-number.sh)
+                  echo "SECRET_VERSION=$SECRET_VERSION" >> "$GITHUB_OUTPUT"
+            - name: Remove old environment variables and upload new ones
+              run: |
+                  vercel env rm SECRET_VERSION preview --yes --token=${{ secrets.VERCEL_API_TOKEN }}
+                  echo "${{ steps.get-version.outputs.SECRET_VERSION }}" | vercel env add SECRET_VERSION preview --token=${{ secrets.VERCEL_API_TOKEN }}
+            - name: Install Vercel CLI
+              run: npm install --global vercel@latest
+            - name: Pull Vercel Environment Information
+              run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_API_TOKEN }}
+            - name: Build Project Artifacts
+              run: vercel build --token=${{ secrets.VERCEL_API_TOKEN }}
+            - name: Deploy Project Artifacts to Vercel
+              run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_API_TOKEN }}
+            - name: Deploy Project Artifacts to Vercel
+              run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_API_TOKEN }}

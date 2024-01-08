@@ -4,7 +4,6 @@ import { siteConfig } from '@/config/site'
 import { figtree } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import { SiteHeader } from '@/components/site-header'
-import { SiteFooter } from '@/components/site-footer'
 import GoogleTag from '@/components/google-tag'
 import { Metadata } from 'next'
 
@@ -38,13 +37,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'bg-background min-h-screen font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased',
           figtree.variable,
         )}
       >
         <SiteHeader />
         {children}
-        <SiteFooter />
         <GoogleTag />
       </body>
     </html>
