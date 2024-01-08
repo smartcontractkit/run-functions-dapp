@@ -20,7 +20,13 @@ This dApp consists of two parts: the contracts and the web UI.
 
 ### Overview
 
-![A diagram outlining the structure of the application](app/public/how-it-works.png)
+#### X
+
+![A diagram outlining the structure of the application](app/public/how-it-works-x.jpg)
+
+#### Open-meteo
+
+![A diagram outlining the structure of the application](app/public/how-it-works-meteo.png)
 
 ## Frontend
 
