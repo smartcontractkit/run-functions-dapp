@@ -103,7 +103,11 @@ const History = async () => {
 
                   <div className="flex justify-between">
                     <span className="text-[14px] text-[#4771D1]">
-                      <a href={`https://x.com/${username}/status/${tweetId}`}>
+                      <a
+                        href={`https://x.com/${username}/status/${tweetId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         See full post{' '}
                         <Image
                           src="/arrow-go-to-up-blue.svg"
