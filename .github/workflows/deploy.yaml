@@ -4,7 +4,7 @@ env:
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-    POLYGON_MUMBAI_RPC_URL: ${{ secrets.POLYGON_MUMBAI_RPC_URL }}
+    AVALANCHE_FUJI_RPC_URL: ${{ secrets.AVALANCHE_FUJI_RPC_URL }}
     X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
 
 on:
@@ -15,9 +15,6 @@ jobs:
     change-environment-variable:
         name: Upload secrets and deploy to Vercel
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./app
         steps:
             - name: Checkout
               uses: actions/checkout@v4
