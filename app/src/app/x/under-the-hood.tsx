@@ -121,7 +121,7 @@ const UnderTheHood = ({ children }: { children?: ReactNode }) => {
             <Link
               target="_blank"
               rel="noreferrer"
-              href="https://remix.ethereum.org/#url=https://github.com/smartcontractkit/run-functions-dapp/blob/main/contracts/contracts/WeatherConsumer.sol"
+              href="https://remix.ethereum.org/#url=https://github.com/smartcontractkit/run-functions-dapp/blob/main/contracts/contracts/XUserDataConsumer.sol"
               className={cn(
                 buttonVariants({ variant: 'link' }),
                 'space-x-2 py-3',
