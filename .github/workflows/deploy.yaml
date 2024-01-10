@@ -11,7 +11,6 @@ on:
     schedule:
         - cron: "00 00 * * */2"
 
-
 jobs:
     change-environment-variable:
         name: Upload secrets and deploy to Vercel
@@ -24,12 +23,12 @@ jobs:
               id: get-version
               working-directory: ./app
               run: |
-                  SECRET_VERSION=$(bash ../.github/workflows/deploy.sh | bash ../.github/workflows/get-version-number.sh)
-                  echo "SECRET_VERSION=$SECRET_VERSION" >> "$GITHUB_OUTPUT"
+                  X_SECRET_VERSION_ID=$(bash ../.github/workflows/deploy.sh | bash ../.github/workflows/get-version-number.sh)
+                  echo "X_SECRET_VERSION_ID=$X_SECRET_VERSION_ID" >> "$GITHUB_OUTPUT"
             - name: Remove old environment variables and upload new ones
               run: |
-                  vercel env rm SECRET_VERSION preview --yes --token=${{ secrets.VERCEL_API_TOKEN }}
-                  echo "${{ steps.get-version.outputs.SECRET_VERSION }}" | vercel env add SECRET_VERSION preview --token=${{ secrets.VERCEL_API_TOKEN }}
+                  vercel env rm X_SECRET_VERSION_ID preview --yes --token=${{ secrets.VERCEL_API_TOKEN }}
+                  echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID preview --token=${{ secrets.VERCEL_API_TOKEN }}
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
             - name: Pull Vercel Environment Information
