@@ -1,18 +1,14 @@
 import 'server-only'
 import { ethers } from 'ethers'
 import { weatherConsumerABI, xConsumerABI } from '@/config/contracts'
-import { Coordinates, TweetHistoryEntry } from '@/types'
-import { fetchTweetData } from './fetch-tweet'
-import { kv } from '@vercel/kv'
-import { request } from 'http'
-
+import { Coordinates } from '@/types'
 /* WEATHER REQUEST */
 
 const getWeatherContract = () => {
   const provider = new ethers.JsonRpcProvider(process.env.NETWORK_RPC_URL)
   const signer = new ethers.Wallet(process.env.PRIVATE_KEY as string, provider)
   const contract = new ethers.Contract(
-    process.env.CONTRACT_ADDRESS as string,
+    process.env.CONTRACT_ADDRESS_METEO as string,
     weatherConsumerABI,
     signer,
   )
