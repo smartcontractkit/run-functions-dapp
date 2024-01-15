@@ -6,7 +6,7 @@ task("deploy-x-consumer", "Deploys the X User Consumer contract")
   .addOptionalParam(
     "callbackgaslimit",
     "Maximum amount of gas that can be used to call fulfillRequest in the consumer contract",
-    100_000,
+    200_000,
     types.int
   )
   .setAction(async (taskArgs) => {
