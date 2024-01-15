@@ -51,7 +51,7 @@ Set environment variables by copying `.env.example` to `.env` and filling in the
 - `CONTRACT_ADDRESS_X` of the deployed contract that utilizes X API Functionality
 - `X_SECRET_VERSION_ID` - secret version on the DON Storage of the X Bearer Token.
     This variable can be found in the output of the `npx hardhat functions-upload-secrets-don --slotid 0 --network avalancheFuji --ttl 4320` command.
-- `TWITTER_API_BEARER_TOKEN` - this bearer token is used to get data off-chain from the X API.
+- `X_BEARER_TOKEN` - this bearer token is used to get data off-chain from the X API.
 - `NETWORK_RPC_URL` - Avalanche testnet RPC endpoint.
 - `PRIVATE_KEY` - for the signing and broadcasting transactions in the backend.
 
