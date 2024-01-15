@@ -168,4 +168,12 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   function setDonId(bytes32 newDonId) external onlyOwner {
     donId = newDonId;
   }
+
+  /**
+   * @notice Set the gas limit
+   * @param newGasLimit new gas limit
+   */
+  function setCallbackGasLimit(uint32 newGasLimit) external onlyOwner {
+    gasLimit = newGasLimit;
+  }
 }
