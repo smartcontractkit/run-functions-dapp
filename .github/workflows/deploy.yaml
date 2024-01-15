@@ -8,8 +8,7 @@ env:
     X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
 
 on:
-    schedule:
-        - cron: "00 00 * * */2"
+    push:
 
 jobs:
     change-environment-variable:
@@ -27,9 +26,17 @@ jobs:
                   echo "X_SECRET_VERSION_ID=$X_SECRET_VERSION_ID" >> "$GITHUB_OUTPUT"
             - name: Remove old environment variables and upload new ones
               run: |
-                  echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID preview --token=${{ secrets.VERCEL_API_TOKEN }} --yes
-                  echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID development --token=${{ secrets.VERCEL_API_TOKEN }} --yes
-                  echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID production --token=${{ secrets.VERCEL_API_TOKEN }} --yes
+                  if vercel env ls --token=${{ secrets.VERCEL_API_TOKEN }} | grep -q X_SECRET_VERSION_ID; then
+                    echo "Environment variable X_SECRET_VERSION_ID exists. Removing..."
+                    vercel env rm X_SECRET_VERSION_ID preview --token=${{ secrets.VERCEL_API_TOKEN }} --yes
+                    vercel env rm X_SECRET_VERSION_ID production --token=${{ secrets.VERCEL_API_TOKEN }} --yes
+                    vercel env rm X_SECRET_VERSION_ID development --token=${{ secrets.VERCEL_API_TOKEN }} --yes
+                  else
+                    echo "Environment variable X_SECRET_VERSION_ID does not exist."
+                  fi
+                    echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID preview --token=${{ secrets.VERCEL_API_TOKEN }} --yes
+                    echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID development --token=${{ secrets.VERCEL_API_TOKEN }} --yes
+                    echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID production --token=${{ secrets.VERCEL_API_TOKEN }} --yes
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
             - name: Pull Vercel Environment Information
