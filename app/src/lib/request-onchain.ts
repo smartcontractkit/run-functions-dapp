@@ -65,7 +65,7 @@ export const requestTweetOnchain = async (username: string) => {
     'https://api.twitter.com/2/users/by/username/' + username,
     {
       headers: {
-        Authorization: `Bearer ${process.env.TWITTER_API_BEARER_TOKEN}`,
+        Authorization: `Bearer ${process.env.X_BEARER_TOKEN}`,
       },
     },
   )

@@ -55,7 +55,9 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     "if (xTweetsResponse.error) {"
     "throw Error('X User Request Error');"
     "}"
-    "return Functions.encodeString(xTweetsResponse.data.data[0].text);";
+    "const lastTweet = xTweetsResponse.data.data[0].text;"
+    "const shortenedTweet = lastTweet.substring(0, 255);"
+    "return Functions.encodeString(shortenedTweet);";
 
   bytes32 public donId; // DON ID for the Functions DON to which the requests are sent
   uint64 private subscriptionId; // Subscription ID for the Chainlink Functions
@@ -82,8 +84,10 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   }
 
   /**
-   * @notice Request weather info for a location
-   * @param username username of said user e.g. elonmusk
+   * @notice Request X profile information for provided handle
+   * @param username username of said user e.g. chainlink
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
    */
   function requestUserInfo(string calldata username, uint8 slotId, uint64 version) external {
     string[] memory args = new string[](1);
@@ -94,6 +98,12 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     emit UserInfoRequested(requestId, username);
   }
 
+  /**
+   * @notice Request last post for given username
+   * @param userId username of said user e.g. chainlink
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
+   */
   function requestLastTweet(string calldata userId, uint8 slotId, uint64 version) external {
     string[] memory args = new string[](1);
     args[0] = userId;
@@ -122,6 +132,8 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   /**
    * @notice Triggers an on-demand Functions request
    * @param args String arguments passed into the source code and accessible via the global variable \`args\`
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
    */
   function _sendRequest(
     string memory source,
@@ -176,30 +188,30 @@ export const TABS = [
     label: 'JavaScript Source',
     content:
       'This is where the JavaScript code that Chainlink Functions will execute is stored. By storing it on-chain, we have guarantees that this and only this code will be executed.',
-    highlightedLines: Array.from({ length: 29 }, (v, k) => 24 + k),
+    highlightedLines: Array.from({ length: 31 }, (v, k) => 24 + k),
   },
   {
     label: 'Subscription ID',
     content:
       'This is where the Chainlink Functions <a class="explainer-link" href="https://docs.chain.link/chainlink-functions/resources/subscriptions">subscription ID</a> is stored. This is required for your smart contract to use Chainlink Functions.',
-    highlightedLines: [55],
+    highlightedLines: [56],
   },
   {
     label: 'Functions Initialization',
     content:
       'In this contract\'s constructor, we set some Chainlink Functions specific configuration values such as the <a class="explainer-link" href="https://docs.chain.link/chainlink-functions/supported-networks">DON ID</a>, Functions <a class="explainer-link" href="https://docs.chain.link/chainlink-functions/resources/subscriptions">subscription ID</a> and gas limit for the callback transaction.',
-    highlightedLines: Array.from({ length: 4 }, (v, k) => 72 + k),
+    highlightedLines: Array.from({ length: 4 }, (v, k) => 74 + k),
   },
   {
     label: 'Functions Request',
     content:
       'This is the function called by the UI when a new request is initiated. It sends the request to the Chainlink Functions DoN, along with all associated parameters, such as the JavaScript code to execute, subscription ID, gas limit for the callback transaction, and DoN ID of the Chainlink Functions network we wish to execute the code on.',
-    highlightedLines: Array.from({ length: 17 }, (v, k) => 82 + k),
+    highlightedLines: Array.from({ length: 29 }, (v, k) => 80 + k),
   },
   {
     label: 'Functions Response',
     content:
       'This is the function called by the Chainlink Functions DoN when it receives a response from the JavaScript code executed off-chain in the Chainlink Function.',
-    highlightedLines: Array.from({ length: 8 }, (v, k) => 105 + k),
+    highlightedLines: Array.from({ length: 13 }, (v, k) => 110 + k),
   },
 ]

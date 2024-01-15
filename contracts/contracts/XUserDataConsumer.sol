@@ -49,7 +49,9 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     "if (xTweetsResponse.error) {"
     "throw Error('X User Request Error');"
     "}"
-    "return Functions.encodeString(xTweetsResponse.data.data[0].text);";
+    "const lastTweet = xTweetsResponse.data.data[0].text;"
+    "const shortenedTweet = lastTweet.substring(0, 255);"
+    "return Functions.encodeString(shortenedTweet);";
 
   bytes32 public donId; // DON ID for the Functions DON to which the requests are sent
   uint64 private subscriptionId; // Subscription ID for the Chainlink Functions
@@ -78,6 +80,8 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   /**
    * @notice Request X profile information for provided handle
    * @param username username of said user e.g. chainlink
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
    */
   function requestUserInfo(string calldata username, uint8 slotId, uint64 version) external {
     string[] memory args = new string[](1);
@@ -88,6 +92,12 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     emit UserInfoRequested(requestId, username);
   }
 
+  /**
+   * @notice Request last post for given username
+   * @param userId username of said user e.g. chainlink
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
+   */
   function requestLastTweet(string calldata userId, uint8 slotId, uint64 version) external {
     string[] memory args = new string[](1);
     args[0] = userId;
@@ -116,6 +126,8 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   /**
    * @notice Triggers an on-demand Functions request
    * @param args String arguments passed into the source code and accessible via the global variable `args`
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
    */
   function _sendRequest(
     string memory source,

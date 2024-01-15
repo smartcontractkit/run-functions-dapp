@@ -3,7 +3,7 @@ import { cache } from 'react'
 import { MostRecentTweetResponse, TweetMediaResponse } from '@/types'
 
 const twitterApiUrl = 'https://api.twitter.com/2/'
-const twitterApiBearerToken = process.env.TWITTER_API_BEARER_TOKEN
+const twitterApiBearerToken = process.env.X_BEARER_TOKEN
 const defaultProfileImage =
   'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 
