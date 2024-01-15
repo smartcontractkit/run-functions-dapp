@@ -80,6 +80,8 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   /**
    * @notice Request X profile information for provided handle
    * @param username username of said user e.g. chainlink
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
    */
   function requestUserInfo(string calldata username, uint8 slotId, uint64 version) external {
     string[] memory args = new string[](1);
@@ -90,6 +92,12 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     emit UserInfoRequested(requestId, username);
   }
 
+  /**
+   * @notice Request last post for given username
+   * @param userId username of said user e.g. chainlink
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
+   */
   function requestLastTweet(string calldata userId, uint8 slotId, uint64 version) external {
     string[] memory args = new string[](1);
     args[0] = userId;
@@ -118,6 +126,8 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
   /**
    * @notice Triggers an on-demand Functions request
    * @param args String arguments passed into the source code and accessible via the global variable `args`
+   * @param slotId the location of the DON-hosted secrets
+   * @param version the version of the secret to be used
    */
   function _sendRequest(
     string memory source,
