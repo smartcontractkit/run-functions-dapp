@@ -49,7 +49,7 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     "if (xTweetsResponse.error) {"
     "throw Error('X User Request Error');"
     "}"
-    "const lastTweet = xTweetsResponse.data.data[0].text"
+    "const lastTweet = xTweetsResponse.data.data[0].text;"
     "const shortenedTweet = lastTweet.substring(0, 255);"
     "return Functions.encodeString(shortenedTweet);";
 
