@@ -20,7 +20,13 @@ This dApp consists of two parts: the contracts and the web UI.
 
 ### Overview
 
-![A diagram outlining the structure of the application](app/public/how-it-works.png)
+#### X
+
+![A diagram outlining the structure of the application](app/public/how-it-works-x.jpg)
+
+#### Open-meteo
+
+![A diagram outlining the structure of the application](app/public/how-it-works-meteo.png)
 
 ## Frontend
 
@@ -41,7 +47,11 @@ Set environment variables by copying `.env.example` to `.env` and filling in the
 
 - `NEXT_PUBLIC_GTM_ID` Google Analytics id.
 - `GEOCODING_API_KEY` - API KEY from API Ninjas used for geocoding.
-- `CONTRACT_ADDRESS` of the deployed contract.
+- `CONTRACT_ADDRESS_METEO` of the deployed contract that utilizes Meteo API Functionality
+- `CONTRACT_ADDRESS_X` of the deployed contract that utilizes X API Functionality
+- `X_SECRET_VERSION_ID` - secret version on the DON Storage of the X Bearer Token.
+    This variable can be found in the output of the `npx hardhat functions-upload-secrets-don --slotid 0 --network avalancheFuji --ttl 4320` command.
+- `X_BEARER_TOKEN` - this bearer token is used to get data off-chain from the X API.
 - `NETWORK_RPC_URL` - Avalanche testnet RPC endpoint.
 - `PRIVATE_KEY` - for the signing and broadcasting transactions in the backend.
 
@@ -68,12 +78,17 @@ The fee for the Chainlink Functions request is paid from the subscription balanc
 
 The dApp uses a rate limiting mechanism to prevent spamming the backend with requests. The rate limiting is implemented using Vercel KV and is based on the IP address of the user. The rate limit is set to 3 request per 10 minutes. The rate limit can be configured by changing the `RATELIMIT_IP_EXCEPTION_LIST` environment variable.
 
+### Recent Requests
+
+The frontend displays the last 10 requests made to the backend. The requests and their results are stored in Vercel KV and are fetched from the backend.
+
 ### Tech Stack
 
 -   [Next.js](https://nextjs.org/)
 -   [TypeScript](https://www.typescriptlang.org/)
 -   [Tailwind CSS](https://tailwindcss.com/)
 -   [shadcn/ui](https://ui.shadcn.com/)
+-   [React Syntax Highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter)
 -   [Ethers](https://docs.ethers.io/v5/)
 
 ## Contracts
@@ -83,6 +98,8 @@ The dApp uses a rate limiting mechanism to prevent spamming the backend with req
 ### Project Details
 
 `WeatherConsumer.sol` contract implements a Chainlink Functions consumer which runs a weather request check for the provided geolocation on the set weather API.
+
+`XUserDataConsumer.sol` contract implements a Chainlink Functions consumer which can record information from X (formerly known as Twitter)'s API like a user's profile information and user's last tweets on-chain.
 
 ### Tech Stack
 
@@ -98,20 +115,30 @@ npm install
 ```
 
 2. Obtain the values for following environment variables:
-   - `PRIVATE_KEY` for your development wallet - `POLYGON_MUMBAI_RPC_URL`, `ETHEREUM_SEPOLIA_RPC_URL`, or `AVALANCHE_FUJI_RPC_URL`
+   - `PRIVATE_KEY` for your development wallet
+   - `POLYGON_MUMBAI_RPC_URL`, `ETHEREUM_SEPOLIA_RPC_URL`, or `AVALANCHE_FUJI_RPC_URL`
    - `POLYGONSCAN_API_KEY`, `ETHERSCAN_API_KEY`, or `FUJI_SNOWTRACE_API_KEY` blockchain explore API keys depending on which network you're using
+   - `X_BEARER_TOKEN` token needed to make API requests on-chain. This token is encoded as a secret and used by Chainlink's DON
 
 3. Set the required environment variables. For improved security, Chainlink provides the NPM package [@chainlink/env-enc](https://www.npmjs.com/package/@chainlink/env-enc) which can be used to keep environment variables in a password encrypted `.env.enc` file instead of a plaintext `.env` for additional security. More detail on environment variable management and the tooling is provided in the [Environment Variable Management](#environment-variable-management) section.
-   1. Set an encryption password for your environment variables to a secure password by running `npx env-enc set-pw`. This password needs to be set each time you create or restart a terminal shell session.<br>
-   2. Use the command `npx env-enc set` to set the required environment variables.
+    1. Set an encryption password for your environment variables to a secure password by running `npx env-enc set-pw`. This password needs to be set each time you create or restart a terminal shell session.<br>
+    2. Use the command `npx env-enc set` to set the required environment variables.
 
 ### Deploy
 
 1. Locally simulate the execution of your JavaScript source by running `npx hardhat functions-simulate-script`
 
-2. Create and fund a new Functions billing subscription using the [Chainlink Functions UI](https://functions.chain.link) and add the deployed consumer contract as an authorized consumer to your subscription. You can also do this programmatically with `npx hardhat functions-sub-create --network network_name_here --amount LINK_funding_amount_here --contract 0x_deployed_client_contract_address_here`<br>**Note**: Ensure your wallet has a sufficient LINK balance before running this command. Testnet LINK can be obtained at <a href="https://faucets.chain.link/">faucets.chain.link</a>. Also make a note of your subscription Id as you will need it for most commands.
+2. Create and fund a new Functions billing subscription using the [Chainlink Functions UI](https://functions.chain.link) <br>**Note**: Ensure your wallet has a sufficient LINK balance before running this command. Testnet LINK can be obtained at <a href="https://faucets.chain.link/">faucets.chain.link</a>. Also make a note of your subscription Id as you will need it for most commands.
 
-3. Deploy and verify the consumer contract to an actual blockchain network by running `npx hardhat deploy-weather-consumer --network network_name_here --subid your_sub_id --verify true`<br>**Note**: Make sure `<explorer>_API_KEY` is set if using `--verify true` depending on which network is used.
+3. Deploy and verify the consumer contract to an actual blockchain network by running
+
+    1. If you want to deploy the weather consumer contract
+       `npx hardhat deploy-weather-consumer --network network_name_here --subid your_sub_id` <br>**Note**: Make sure `<explorer>_API_KEY` is set if using `--verify true` depending on which network is used.
+
+    2. If you want to deploy the X consumer contract
+       `npx hardhat deploy-x-consumer --network network_name_here --subid your_sub_id --verify true`<br>**Note**: Make sure `<explorer>_API_KEY` is set if using `--verify true` depending on which network is used.
+
+4. Add the deployed consumer contract as an authorized consumer to your subscription through the [Chainlink Functions UI](https://functions.chain.link)
 
 ### Environment Variable Management
 

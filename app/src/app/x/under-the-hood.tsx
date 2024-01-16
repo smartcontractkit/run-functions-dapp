@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { CSSProperties, useRef, useState, ReactNode } from 'react'
 import { createElement } from 'react-syntax-highlighter'
-import { CONTRACT_CODE, TABS } from '@/config/contract-code'
+import { CONTRACT_CODE, TABS } from '@/config/contract-code-x'
 import { siteConfig } from '@/config/site'
 
 const UnderTheHood = ({ children }: { children?: ReactNode }) => {
@@ -17,7 +17,7 @@ const UnderTheHood = ({ children }: { children?: ReactNode }) => {
   const linesRef = useRef<Array<HTMLSpanElement | null>>([])
 
   return (
-    <div className="space-y-10 border-b border-b-border py-10 lg:flex lg:min-w-0 lg:space-x-10 lg:space-y-0">
+    <div className="border-b-border space-y-10 border-b py-10 lg:flex lg:min-w-0 lg:space-x-10 lg:space-y-0">
       <div className="lg:w-[340px] lg:shrink-0">
         <h3 className="mb-9 text-2xl font-medium tracking-[-0.24px]">
           Under the Hood
@@ -27,7 +27,7 @@ const UnderTheHood = ({ children }: { children?: ReactNode }) => {
             <Button
               key={i}
               //   eslint-disable-next-line tailwindcss/no-custom-classname
-              className="h-fit w-full flex-col items-start space-y-2 border border-l-8 border-border border-l-[#375BD2] bg-[#181D2999] px-8 py-6 text-left"
+              className="border-border h-fit w-full flex-col items-start space-y-2 border border-l-8 border-l-[#375BD2] bg-[#181D2999] px-8 py-6 text-left"
               onClick={() => {
                 scrollRef.current?.scrollTo({
                   top: linesRef.current[Math.min(...highlightedLines) - 3]
@@ -45,7 +45,7 @@ const UnderTheHood = ({ children }: { children?: ReactNode }) => {
           ) : (
             <Button
               key={i}
-              className="h-fit w-full justify-start bg-background px-8 py-4 text-left text-xl font-medium text-muted-foreground hover:bg-background"
+              className="bg-background text-muted-foreground hover:bg-background h-fit w-full justify-start px-8 py-4 text-left text-xl font-medium"
               onClick={() => {
                 setActiveTab(i)
                 scrollRef.current?.scrollTo({
@@ -63,7 +63,7 @@ const UnderTheHood = ({ children }: { children?: ReactNode }) => {
       </div>
       <div className="lg:min-w-0 lg:shrink">
         <ScrollArea
-          className="mb-6 mt-16 h-[448px] rounded border border-border"
+          className="border-border mb-6 mt-16 h-[448px] rounded border"
           ref={scrollRef}
         >
           <CodeBlock
@@ -121,7 +121,7 @@ const UnderTheHood = ({ children }: { children?: ReactNode }) => {
             <Link
               target="_blank"
               rel="noreferrer"
-              href="https://remix.ethereum.org/#url=https://github.com/smartcontractkit/run-functions-dapp/blob/main/contracts/contracts/WeatherConsumer.sol"
+              href="https://remix.ethereum.org/#url=https://github.com/smartcontractkit/run-functions-dapp/blob/main/contracts/contracts/XUserDataConsumer.sol"
               className={cn(
                 buttonVariants({ variant: 'link' }),
                 'space-x-2 py-3',

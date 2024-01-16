@@ -28,7 +28,9 @@ export const OffchainResponse = async ({
       <label className="text-base font-[450] text-card-foreground">
         Raw Data
       </label>
-      <ScrollArea className={cn('rounded mb-6 mt-2 h-[125px]', firaCode.variable)}>
+      <ScrollArea
+        className={cn('mb-6 mt-2 h-[125px] rounded', firaCode.variable)}
+      >
         <CodeBlock codeString={rawData} />
       </ScrollArea>
       <div className="flex justify-between space-x-4">

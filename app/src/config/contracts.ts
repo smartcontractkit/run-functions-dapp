@@ -165,3 +165,357 @@ export const weatherConsumerABI = [
     outputs: [],
   },
 ] as const
+
+export const xConsumerABI = [
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'router',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes32',
+        name: '_donId',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'uint64',
+        name: '_subscriptionId',
+        type: 'uint64',
+      },
+      {
+        internalType: 'uint32',
+        name: '_gasLimit',
+        type: 'uint32',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
+    inputs: [],
+    name: 'EmptyArgs',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'EmptySource',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NoInlineSecrets',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'OnlyRouterCanFulfill',
+    type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferRequested',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'error',
+        type: 'bytes',
+      },
+    ],
+    name: 'RequestFailed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'id',
+        type: 'bytes32',
+      },
+    ],
+    name: 'RequestFulfilled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'id',
+        type: 'bytes32',
+      },
+    ],
+    name: 'RequestSent',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'requestId',
+        type: 'bytes32',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'response',
+        type: 'string',
+      },
+    ],
+    name: 'UserInfoReceived',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'requestId',
+        type: 'bytes32',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'username',
+        type: 'string',
+      },
+    ],
+    name: 'UserInfoRequested',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'requestId',
+        type: 'bytes32',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'response',
+        type: 'string',
+      },
+    ],
+    name: 'UserLastTweetReceived',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'requestId',
+        type: 'bytes32',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'username',
+        type: 'string',
+      },
+    ],
+    name: 'UserLastTweetRequested',
+    type: 'event',
+  },
+  {
+    inputs: [],
+    name: 'acceptOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'donId',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'requestId',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes',
+        name: 'response',
+        type: 'bytes',
+      },
+      {
+        internalType: 'bytes',
+        name: 'err',
+        type: 'bytes',
+      },
+    ],
+    name: 'handleOracleFulfillment',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'userId',
+        type: 'string',
+      },
+      {
+        internalType: 'uint8',
+        name: 'slotId',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint64',
+        name: 'version',
+        type: 'uint64',
+      },
+    ],
+    name: 'requestLastTweet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'username',
+        type: 'string',
+      },
+      {
+        internalType: 'uint8',
+        name: 'slotId',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint64',
+        name: 'version',
+        type: 'uint64',
+      },
+    ],
+    name: 'requestUserInfo',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    name: 'requests',
+    outputs: [
+      {
+        internalType: 'enum XUserDataConsumer.ResponseType',
+        name: 'responseType',
+        type: 'uint8',
+      },
+      {
+        internalType: 'string',
+        name: 'response',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'newDonId',
+        type: 'bytes32',
+      },
+    ],
+    name: 'setDonId',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+] as const
