@@ -1,15 +1,14 @@
 const id = args[0]
-
 if (!secrets.xBearerToken) {
   throw Error("No bearer token")
 }
-const xUserResponse = await Functions.makeHttpRequest({
+const xTweetsResponse = await Functions.makeHttpRequest({
   url: `https://api.twitter.com/2/users/${id}/tweets`,
   headers: { Authorization: `Bearer ${secrets.xBearerToken}` },
 })
-if (xUserResponse.error) {
-  throw Error("X User Request Error")
+if (xTweetsResponse.error) {
+  throw Error(xTweetsResponse.code)
 }
-
-console.log(xUserResponse.data.data[0].text)
-return Functions.encodeString(xUserResponse.data.data[0].text)
+const lastTweet = xTweetsResponse.data.data[0].text
+const shortenedTweet = lastTweet.substring(0, 255)
+return Functions.encodeString(shortenedTweet)
