@@ -40,8 +40,6 @@ jobs:
                   echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID preview --token=${{ secrets.VERCEL_API_TOKEN }} --yes
                   echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID development --token=${{ secrets.VERCEL_API_TOKEN }} --yes
                   echo "${{ steps.get-version.outputs.X_SECRET_VERSION_ID }}" | vercel env add X_SECRET_VERSION_ID production --token=${{ secrets.VERCEL_API_TOKEN }} --yes
-            - name: Install Vercel CLI
-              run: npm install --global vercel@latest
             - name: Pull Vercel Environment Information
               run: vercel pull --yes --token=${{ secrets.VERCEL_API_TOKEN }}
             - name: Build Project Artifacts
