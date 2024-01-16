@@ -50,7 +50,7 @@ contract XUserDataConsumer is FunctionsClient, ConfirmedOwner {
     "throw Error('X User Request Error');"
     "}"
     "const lastTweet = xTweetsResponse.data.data[0].text;"
-    "const shortenedTweet = lastTweet.substring(0, 255);"
+    "const shortenedTweet = lastTweet.substring(0, 200);"
     "return Functions.encodeString(shortenedTweet);";
 
   bytes32 public donId; // DON ID for the Functions DON to which the requests are sent
