@@ -1,11 +1,16 @@
 import 'server-only'
 import { cache } from 'react'
-import { MostRecentTweetResponse, TweetMediaResponse } from '@/types'
+import {
+  UserDataResponse,
+  TweetMediaResponse,
+  LastTweetsResponse,
+  TweetData,
+  MediaData,
+  DataResponse,
+} from '@/types'
 
 const twitterApiUrl = 'https://api.twitter.com/2/'
 const twitterApiBearerToken = process.env.X_BEARER_TOKEN
-const defaultProfileImage =
-  'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 
 const fetchTwitterApi = cache(
   async <T>(
@@ -25,24 +30,12 @@ const fetchTwitterApi = cache(
       },
     )
     if (response.status !== 200) {
+      console.log(response)
       throw new Error(`Status ${response.status}`)
     }
     return response.json()
   },
 )
-
-export const fetchTweetData = async (username: string) => {
-  const params = new URLSearchParams([
-    ['expansions', 'most_recent_tweet_id'],
-    ['tweet.fields', ['text', 'created_at', 'attachments'].join(',')],
-    ['user.fields', 'profile_image_url'],
-  ])
-  const data = await fetchTwitterApi<MostRecentTweetResponse>(
-    'users/by/username/' + username,
-    params,
-  )
-  return data
-}
 
 export const fetchTweetMedia = async (tweetId: string) => {
   const params = new URLSearchParams([
@@ -57,58 +50,57 @@ export const fetchTweetMedia = async (tweetId: string) => {
   return data
 }
 
-export const getTweetId = (tweetResponse: MostRecentTweetResponse) => {
-  if (tweetResponse.includes?.tweets) {
-    return tweetResponse.includes.tweets[0].id
+export const fetchTweetData = async (
+  username: string,
+): Promise<DataResponse> => {
+  const userParams = new URLSearchParams([['user.fields', 'profile_image_url']])
+  const userDataResponse = await fetchTwitterApi<UserDataResponse>(
+    'users/by/username/' + username,
+    userParams,
+  )
+
+  if (!userDataResponse.data?.id) {
+    return { errors: userDataResponse.errors! }
   }
-  return ''
+
+  const lastTweetsParams = new URLSearchParams([
+    ['expansions', 'attachments.media_keys'],
+    ['tweet.fields', 'created_at'],
+  ])
+  const lastTweetsResponse = await fetchTwitterApi<LastTweetsResponse>(
+    `users/${userDataResponse.data.id}/tweets`,
+    lastTweetsParams,
+  )
+  const lastTweet = lastTweetsResponse.data[0]
+
+  const responseMedia = lastTweetsResponse.includes?.media
+
+  const media = responseMedia ? getTweetMediaUrls(lastTweet, responseMedia) : []
+  return { user: userDataResponse.data, tweet: lastTweet, media }
 }
 
-export const getTweetText = (tweetResponse: MostRecentTweetResponse) => {
-  if (tweetResponse.errors) {
-    return tweetResponse.errors[0].detail
-  }
-  if (tweetResponse.includes?.tweets) {
-    return tweetResponse.includes.tweets[0].text
-  }
-  return ''
-}
-
-export const getProfileImageUrl = (tweetResponse: MostRecentTweetResponse) => {
-  if (tweetResponse.data?.profile_image_url) {
-    return tweetResponse.data.profile_image_url
-  }
-  return defaultProfileImage
-}
-
-export const getTweetHasMedia = (tweetResponse: MostRecentTweetResponse) => {
-  if (
-    tweetResponse.includes?.tweets[0].attachments?.media_keys &&
-    tweetResponse.includes.tweets[0].attachments?.media_keys?.length > 0
-  ) {
-    return true
-  }
-  return false
-}
-
-export const getTweetAuthorName = (tweetResponse: MostRecentTweetResponse) => {
-  if (tweetResponse.data?.name) {
-    return tweetResponse.data.name
-  }
-  return ''
-}
-
-export const getTweetMediaUrls = (tweetResponse: TweetMediaResponse) => {
-  if (
-    tweetResponse.includes?.media &&
-    tweetResponse.includes.media.length > 0
-  ) {
-    return tweetResponse.includes.media
+const getTweetMediaUrls = (tweetData: TweetData, mediaData: MediaData[]) => {
+  const mediaKeys = tweetData.attachments?.media_keys
+  if (mediaKeys && mediaKeys.length > 0) {
+    const mediaObjects = mediaKeys.map((mediaKey) =>
+      mediaData.find((m) => m.media_key === mediaKey),
+    )
+    return mediaObjects
       .map((m) => {
-        if (m.url) return m.url
-        if (m.preview_image_url) return m.preview_image_url
+        if (m?.url) return m.url
+        if (m?.preview_image_url) return m.preview_image_url
       })
       .filter((url) => url) as string[]
   }
   return []
+}
+
+export const getTweetText = (dataResponse: DataResponse) => {
+  if (dataResponse.tweet) {
+    return dataResponse.tweet.text
+  }
+  if (dataResponse.errors) {
+    return dataResponse.errors[0].detail
+  }
+  return ''
 }
