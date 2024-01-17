@@ -7,16 +7,10 @@ import {
   getCurrentWeatherCode,
 } from './fetch-weather'
 import { getUnixTime } from 'date-fns'
-import {
-  fetchTweetData,
-  fetchTweetMedia,
-  getProfileImageUrl,
-  getTweetAuthorName,
-  getTweetHasMedia,
-  getTweetId,
-  getTweetMediaUrls,
-  getTweetText,
-} from './fetch-tweet'
+import { fetchTweetData, getTweetText } from './fetch-tweet'
+
+const DEFAULT_PROFILE_IMAGE =
+  'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 
 export const addToWeatherHistory = async ({
   txHash,
@@ -75,23 +69,14 @@ export const addToTweetHistory = async ({
     await kv.rpop('tweets', 1)
   }
 
-  const lastTweetResponse = await fetchTweetData(username)
+  const data = await fetchTweetData(username)
 
-  const name = getTweetAuthorName(lastTweetResponse)
-  const profileImageUrl = getProfileImageUrl(lastTweetResponse)
-  const tweetText = getTweetText(lastTweetResponse)
-  const tweetId = getTweetId(lastTweetResponse)
-  const timestamp = new Date(
-    lastTweetResponse?.includes?.tweets[0].created_at || '',
-  ).getTime()
-  const hasMedia = getTweetHasMedia(lastTweetResponse)
-  const media: string[] = []
-  if (hasMedia) {
-    const tweetWithMedia = await fetchTweetMedia(tweetId)
-    const mediaUrls = getTweetMediaUrls(tweetWithMedia)
-    media.push(...mediaUrls)
-  }
-
+  const name = data.user?.name ?? ''
+  const profileImageUrl = data.user?.profile_image_url ?? DEFAULT_PROFILE_IMAGE
+  const tweetText = getTweetText(data)
+  const tweetId = data.tweet?.id ?? ''
+  const timestamp = new Date(data.tweet?.created_at || '').getTime()
+  const media = data.media ?? []
   const tweetEntry: TweetHistoryEntry = {
     name,
     txHash,
