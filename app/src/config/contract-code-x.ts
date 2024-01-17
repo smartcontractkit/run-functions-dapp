@@ -194,7 +194,7 @@ export const TABS = [
     label: 'Subscription ID',
     content:
       'This is where the Chainlink Functions <a class="explainer-link" href="https://docs.chain.link/chainlink-functions/resources/subscriptions">subscription ID</a> is stored. This is required for your smart contract to use Chainlink Functions.',
-    highlightedLines: [56],
+    highlightedLines: [57],
   },
   {
     label: 'Functions Initialization',
