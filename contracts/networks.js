@@ -94,19 +94,19 @@ const networks = {
       "https://02.functions-gateway.testnet.chain.link/",
     ],
   },
-  polygonMumbai: {
-    url: process.env.POLYGON_MUMBAI_RPC_URL || "UNSET",
+  polygonAmoy: {
+    url: process.env.POLYGON_AMOY_RPC_URL || "UNSET",
     gasPrice: 20_000_000_000,
     nonce: undefined,
     accounts,
     verifyApiKey: process.env.POLYGONSCAN_API_KEY || "UNSET",
-    chainId: 80001,
+    chainId: 80002,
     confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
     nativeCurrencySymbol: "MATIC",
-    linkToken: "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
-    linkPriceFeed: "0x12162c3E810393dEC01362aBf156D7ecf6159528", // LINK/MATIC
-    functionsRouter: "0x6E2dc0F9DB014aE19888F539E59285D2Ea04244C",
-    donId: "fun-polygon-mumbai-1",
+    linkToken: "0x0Fd9e8d3aF1aaee056EB9e802c3A762a667b1904",
+    linkPriceFeed: "0x408D97c89c141e60872C0835e18Dd1E670CD8781", // LINK/MATIC
+    functionsRouter: "0xC22a79eBA640940ABB6dF0f7982cc119578E11De",
+    donId: "fun-polygon-amoy-1",
     gatewayUrls: [
       "https://01.functions-gateway.testnet.chain.link/",
       "https://02.functions-gateway.testnet.chain.link/",
