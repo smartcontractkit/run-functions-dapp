@@ -49,7 +49,7 @@ module.exports = {
       avalanche: networks.avalanche.verifyApiKey,
       polygon: networks.polygon.verifyApiKey,
       sepolia: networks.ethereumSepolia.verifyApiKey,
-      polygonMumbai: networks.polygonMumbai.verifyApiKey,
+      polygonAmoy: networks.polygonAmoy.verifyApiKey,
       avalancheFujiTestnet: networks.avalancheFuji.verifyApiKey,
     },
   },
