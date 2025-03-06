@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { formatDistanceToNow, fromUnixTime } from 'date-fns'
+// import { formatDistanceToNow, fromUnixTime } from 'date-fns'
 import { cn } from '@/lib/utils'
 import { kv } from '@vercel/kv'
 import { Suspense } from 'react'
@@ -79,7 +79,7 @@ const History = async () => {
                     </div>
                   </div>
                   <div>
-                    {truncate(tweetText)
+                    {truncate(tweetText).toString()
                       .split('\n')
                       .map((t, i) => (
                         <p key={i} className="min-h-[16px] leading-4">
