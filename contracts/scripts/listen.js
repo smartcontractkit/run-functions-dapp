@@ -12,7 +12,7 @@ if (!subscriptionId || isNaN(subscriptionId)) {
   throw Error("Please update the subId variable in scripts/listen.js to your subscription ID.")
 }
 
-const networkName = "polygonMumbai" // TODO @dev update this to your network name
+const networkName = "polygonAmoy" // TODO @dev update this to your network name
 
 // Mount Response Listener
 const provider = new providers.JsonRpcProvider(networks[networkName].url)

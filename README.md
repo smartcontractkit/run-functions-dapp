@@ -116,7 +116,7 @@ npm install
 
 2. Obtain the values for following environment variables:
    - `PRIVATE_KEY` for your development wallet
-   - `POLYGON_MUMBAI_RPC_URL`, `ETHEREUM_SEPOLIA_RPC_URL`, or `AVALANCHE_FUJI_RPC_URL`
+   - `POLYGON_AMOY_RPC_URL`, `ETHEREUM_SEPOLIA_RPC_URL`, or `AVALANCHE_FUJI_RPC_URL`
    - `POLYGONSCAN_API_KEY`, `ETHERSCAN_API_KEY`, or `FUJI_SNOWTRACE_API_KEY` blockchain explore API keys depending on which network you're using
    - `X_BEARER_TOKEN` token needed to make API requests on-chain. This token is encoded as a secret and used by Chainlink's DON
 
